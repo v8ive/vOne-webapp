@@ -12,7 +12,6 @@ function App() {
           <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/signin" element={<SignInPage />} />
-              {/* Add more routes as needed */}
           </Routes>
       </BrowserRouter>
   )

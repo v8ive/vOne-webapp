@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './AuthForm.css'; // Import your CSS file
+import './index.css';
 
 function SignIn() {
     return (

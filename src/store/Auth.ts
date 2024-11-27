@@ -25,7 +25,6 @@ const useAuthStore = create<UserState>((set) => ({
         set({ isLoading: true, error: null });
 
         try {
-            // Firebase authentication logic here
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             set({ user, isLoading: false });
