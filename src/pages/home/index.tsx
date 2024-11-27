@@ -3,7 +3,7 @@ import useAuthStore from '../../store/Auth'
 import { useNavigate } from 'react-router-dom';
 import reactLogo from '../../assets/react.svg'
 import viteLogo from '../../assets/vite.svg'
-import './index.css'
+import './home.css'
 
 function Home() {
     const { user, logout } = useAuthStore()

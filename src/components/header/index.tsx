@@ -1,5 +1,5 @@
 import Dropdown from './Dropdown';
-import './index.css';
+import './header.css';
 
 function Header() {
     return (
