@@ -1,0 +1,48 @@
+.user-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.profile-picture {
+    position: relative;
+}
+
+.profile-picture img {
+    max-width: 200px;
+    border-radius: 50%;
+}
+
+.edit-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.edit-button svg {
+    width: 20px;
+    height: 20px;
+    fill: #007bff;
+}
+
+.profile-details {
+    text-align: center;
+}
+
+.profile-details p {
+    margin-bottom: 10px;
+}
+
+.upload-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
