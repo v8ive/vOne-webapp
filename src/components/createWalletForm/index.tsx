@@ -6,8 +6,7 @@ function CreateWalletForm() {
 
     if (!user) return null;
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async () => {
 
         try {
             await createWallet(user);
