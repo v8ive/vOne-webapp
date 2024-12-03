@@ -1,19 +1,20 @@
 import { useState, useEffect } from 'react';
 import useAuthStore from '../../store/Auth';
-import { UserData } from '../../types/UserData';
 import './profile.css';
 
 function UserProfile() {
-    const { user, isLoading, error, userProfile } = useAuthStore();
+    const { user, isLoading, error } = useAuthStore();
 
+    interface UserData {
+        username: string;
+        email: string;
+    }
     const [userData, setUserData] = useState<UserData | null>(null);
 
     const getUserData = async () => {
         setUserData({
-            username: userProfile?.username || userProfile?.email || 'Unknown',
-            xp: 0,
-            lux: 0,
-            nox: 0,
+            username: 'Unknown',
+            email: 'Unknown',
         });
     };
 
