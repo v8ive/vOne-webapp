@@ -1,0 +1,10 @@
+.wallet-carousel {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.wallet-carousel .wallet-card {
+    /* ... your card styles ... */
+    flex: 0 0 auto;
+    /* Ensure cards don't stretch */
+}

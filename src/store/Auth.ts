@@ -1,39 +1,21 @@
-import { createClient, User } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js';
 import { create } from 'zustand';
-import { UserProfile } from '../types/UserData';
+import { extractDiscordIdFromAvatarUrl } from '../utils/discord';
+import { User } from '../types/User';
 
-const supabase = createClient(
+
+export const supabase = createClient(
     import.meta.env.VITE_SUPABASE_URL!,
     import.meta.env.VITE_SUPABASE_ANON_KEY!
 );
 
-interface ExtendedUser extends User {
-    profile?: UserProfile | null;
-}
-
 interface UserState {
-    user: ExtendedUser | null;
+    user: User | null;
     isLoading: boolean;
     error: string | null;
     signInWithDiscord: () => void;
-    signUp: (email: string, username: string, password: string) => void;
     signOut: () => void;
     initialize: () => void;
-}
-
-async function getUserProfile(userId: string) {
-    const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('user_id', userId)
-        .single();
-
-    if (error) {
-        console.error('Error fetching user profile data:', error);
-        return null;
-    }
-
-    return data;
 }
 
 const useAuthStore = create<UserState>((set) => ({
@@ -48,43 +30,17 @@ const useAuthStore = create<UserState>((set) => ({
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: 'discord'
         });
-        console.log(data, error);
-
-    },
-
-    signUp: async (email, username, password) => {
-        set({ isLoading: true, error: null });
-
-        try {
-            const { data, error } = await supabase.auth.signUp({
-                email: email,
-                password: password
-            });
-
-            if (error) {
-                return set({ error: error.message, isLoading: false });
-            }
-
-            if (!data) {
-                throw new Error('No Data. Sign up failed');
-            } else if (!data.user) {
-                throw new Error('User not found. Sign up failed');
-            }
-
-            await supabase
-                .from('profiles')
-                .insert([{ 
-                    user_id: data.user.id,
-                    username,
-                    email,
-                }]);
-
-            const userProfile = await getUserProfile(data.user.id);
-
-            set({ user: { ...data.user, profile: userProfile }, isLoading: false });
-        } catch (error) {
-            set({ error: (error as Error).message, isLoading: false });
+        
+        if (error) {
+            console.error('Error signing in with Discord:', error);
+            set({ isLoading: false, error: error.message });
+            return;
+        } else if (!data) {
+            console.error('No data received from Discord');
+            set({ isLoading: false, error: 'No data received from Discord' });
+            return;
         }
+
     },
 
     signOut: async () => {
@@ -101,12 +57,63 @@ const useAuthStore = create<UserState>((set) => ({
     initialize: async () => {
         const session = await supabase.auth.getSession();
         if (!session) {
+            set({ user: null });
             return;
         }
-        if (session.data.session?.user) {
-            const userProfile = await getUserProfile(session.data.session.user.id);
-            set({ user: { ...session.data.session.user, profile: userProfile } });
+
+        const user = session.data.session?.user;
+        if (!user) {
+            set({ user: null });
+            return;
         }
+
+        // Check if user exists in the database
+        let dbUser = await supabase
+            .from('users')
+            .select('*')
+            .eq('user_id', user.id)
+            .single();
+
+        if (!dbUser.data) {
+            // User doesn't exist, create them in the database
+            const { error } = await supabase
+                .from('profiles')
+                .insert([{
+                    discord_id: extractDiscordIdFromAvatarUrl(user.user_metadata?.avatar_url),
+                    profile_picture: user.user_metadata?.avatar_url,
+                    username: user.user_metadata?.full_name,
+                    email: user.email,
+                }])
+                .single();
+            dbUser = await supabase
+                .from('users')
+                .select('*')
+                .eq('user_id', user.id)
+                .single();
+
+            if (error) {
+                console.error('Error creating user:', error);
+                // Handle the error, e.g., show an error message to the user
+                return;
+            }
+            
+        }
+        const { data, error } = await supabase
+            .from('wallets')
+            .select('*')
+            .eq('user_id', user.id);
+        if (error) {
+            console.error('Error fetching user wallets:', error);
+            // Handle the error, e.g., show an error message to the user
+            return;
+        }
+        const userWallets = data || [];
+
+        set({ user: { 
+            ...user,
+            ...dbUser.data,
+            wallets: userWallets
+        } });
     }
 }));
 

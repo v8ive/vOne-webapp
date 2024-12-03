@@ -1,0 +1,16 @@
+.wallet-table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+.wallet-table th,
+.wallet-table td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.wallet-table th {
+    background-color: #000;
+}
