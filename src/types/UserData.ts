@@ -1,7 +1,11 @@
 
-export interface UserData {
+export interface UserProfile {
+    id: string;
+    user_id: string;
     username: string;
-    xp: number;
-    lux: number;
-    nox: number;
+    username_color: string;
+    bio: string;
+    profile_picture: string;
+    created_at: string;
+    email: string;
 }

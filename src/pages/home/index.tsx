@@ -6,7 +6,7 @@ import viteLogo from '../../assets/vite.svg'
 import './home.css'
 
 function Home() {
-    const { user, logout } = useAuthStore()
+    const { user, signOut } = useAuthStore()
     const [count, setCount] = useState(0)
     const navigate = useNavigate();
 
@@ -32,7 +32,7 @@ function Home() {
 
             {/* Display sign-in status based on user state */}
             {user ? ( // Check if user exists in the state
-                <p>You are signed in as: {user.email} || <button onClick={logout}>Sign Out</button></p>
+                <p>You are signed in as: {user.email} || <button onClick={signOut}>Sign Out</button></p>
             ) : (
                 <button onClick={() => navigate('/signin')}>Sign In</button>
             )}
