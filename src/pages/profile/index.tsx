@@ -1,5 +1,4 @@
 import CreateWalletForm from '../../components/createWalletForm';
-import WalletCarousel from '../../components/walletCarousel';
 import WalletList from '../../components/walletList';
 import useAuthStore from '../../store/Auth';
 import './profile.css';
