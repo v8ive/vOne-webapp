@@ -53,7 +53,7 @@ function MiningPage() {
 
         if (!wsRef.current) {
             const ws = connectToWebSocket(
-                import.meta.env.VITE_WEBSOCKET_URL + '?userId=' + user?.user_id,
+                import.meta.env.VITE_WEBSOCKET_URL + '?user_id=' + user?.user_id,
                 async (action, data) => { // onMessage
                     if (action === 'new_block') {
                         setBlocks(blocks => [...blocks, data as Block]);
