@@ -160,6 +160,10 @@ function MiningPage() {
         sendMessage(wsRef.current, messageJson);
     };
 
+    if (!user) {
+        return <p>Please sign in.</p>;
+    }
+
     return (
         <div>
             <h1>Blockchain</h1>
