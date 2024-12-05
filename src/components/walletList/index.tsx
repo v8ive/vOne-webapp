@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import { Wallet } from '../../types/Wallet';
 import { useState } from 'react';
 
-function WalletCard({ wallet } : { wallet: Wallet }) {
+function WalletCard({ wallet }: { wallet: Wallet }) {
     const [isHovered, setIsHovered] = useState(false);
 
     const handleMouseEnter = () => {
@@ -15,10 +15,9 @@ function WalletCard({ wallet } : { wallet: Wallet }) {
     const handleMouseLeave = () => {
         setIsHovered(false);
     };
-    
+
     return (
         <Card
-
             sx={{
                 minWidth: 275,
                 maxWidth: 345,
@@ -49,7 +48,7 @@ function WalletCard({ wallet } : { wallet: Wallet }) {
     );
 }
 
-function WalletList({ wallets } : { wallets: Wallet[] }) {
+function WalletList({ wallets }: { wallets: Wallet[] }) {
     return (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
             {wallets.map((wallet) => (

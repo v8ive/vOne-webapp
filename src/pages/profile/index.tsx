@@ -1,10 +1,33 @@
-import CreateWalletForm from '../../components/createWalletForm';
+import { useEffect, useState } from 'react';
 import WalletList from '../../components/walletList';
 import useAuthStore from '../../store/Auth';
 import './profile.css';
+import { createWallet, fetchUserWallets } from '../../utils/wallets';
+import { Wallet } from '../../types/Wallet';
 
 function UserProfile() {
     const { user, isLoading, error } = useAuthStore();
+    const [wallets, setWallets] = useState<Wallet[]>([]);
+
+    useEffect(() => {
+        if (user) {
+            fetchUserWallets(user.user_id)
+                .then((wallets: Wallet[]) => setWallets(wallets))
+                .catch((error) => console.error('Error fetching wallets:', error));
+        }
+    }, [user.id]);
+
+    if (!user) return null;
+
+    const handleSubmit = async () => {
+        try {
+            await createWallet(user);
+            const fetchedWallets = await fetchUserWallets(user.user_id);
+            setWallets(fetchedWallets);
+        } catch (error) {
+            console.error('Error creating wallet:', error);
+        }
+    };
 
     const renderContent = () => {
         if (isLoading) return <p>Loading...</p>;
@@ -26,15 +49,9 @@ function UserProfile() {
                     </div>
                     <h2>{user?.username}</h2>
                     <p>XP: {0}</p>
-                    <div className="currency-details">
-                        <p>Lux: {0}</p>
-                    </div>
-                    <div className="currency-details">
-                        <p>Nox: {0}</p>
-                    </div>
                 </div>
-                <CreateWalletForm />
-                <WalletList wallets={user.wallets} />
+                <button type="button" onClick={handleSubmit}>Create Wallet</button>
+                <WalletList wallets={wallets} />
             </div>
         );
     };

@@ -20,6 +20,10 @@
         "@fortawesome/free-solid-svg-icons": "^6.7.1",
         "@fortawesome/react-fontawesome": "^0.2.2",
         "@mui/material": "^6.1.9",
+        "@radix-ui/react-dropdown-menu": "^2.1.2",
+        "@radix-ui/react-switch": "^1.1.1",
+        "@radix-ui/react-tooltip": "^1.1.4",
+        "@radix-ui/themes": "^3.1.6",
         "@supabase/supabase-js": "^2.46.2",
         "aws-sdk": "^2.1692.0",
         "axios": "^1.7.8",
@@ -34,6 +38,7 @@
         "react-image-crop": "^11.0.7",
         "react-router-dom": "^7.0.1",
         "react-slick": "^0.30.2",
+        "websocket": "^1.0.35",
         "winston": "^3.17.0",
         "zustand": "^5.0.1"
     },

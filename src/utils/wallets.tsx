@@ -22,3 +22,16 @@ export async function createWallet(user: User) {
 
     return;
 }
+
+export async function fetchUserWallets(user_id: string) {
+    const { data: wallets, error } = await supabase
+        .from('wallets')
+        .select('*')
+        .eq('user_id', user_id);
+
+    if (error) {
+        throw error;
+    }
+
+    return wallets;
+}
