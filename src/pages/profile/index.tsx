@@ -15,7 +15,7 @@ function UserProfile() {
                 .then((wallets: Wallet[]) => setWallets(wallets))
                 .catch((error) => console.error('Error fetching wallets:', error));
         }
-    }, [user.id]);
+    }, [user]);
 
     if (!user) return null;
 
