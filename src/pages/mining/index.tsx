@@ -165,16 +165,16 @@ function MiningPage() {
     };
 
     return (
-        <div>
+        <div className='container'>
             <h1>Blockchain</h1>
             {!isConnected && <p>Connecting...</p>}
             {isConnected &&
                 <div>
-                    <ul>
+                    <div>
                         {blocks.length > 0 && (
                             <>
                                 <h2>Blocks</h2>
-                                <Table.Root>
+                                <Table.Root variant='surface'>
                                     <Table.Header>
                                         <Table.Row>
                                             <Table.ColumnHeaderCell>Height</Table.ColumnHeaderCell>
@@ -190,9 +190,9 @@ function MiningPage() {
                                         {blocks.map((block: Block, index) => (
                                             <Table.Row key={index}>
                                                 <Table.Cell>{block.block_height}</Table.Cell>
-                                                <Table.Cell>{block.hash}</Table.Cell>
+                                                <Table.Cell>{block.hash.slice(0, 5) + (block.hash.slice(0, 5).length > 4 ? '...' : '')}</Table.Cell>
                                                 <Table.Cell>{block.nonce}</Table.Cell>
-                                                <Table.Cell>{block.previous_hash}</Table.Cell>
+                                                <Table.Cell>{block.previous_hash.slice(0, 5) + (block.previous_hash.slice(0, 5).length > 4 ? '...' : '')}</Table.Cell>
                                                 <Table.Cell>{block.timestamp}</Table.Cell>
                                                 <Table.Cell>{block.transactions.length}</Table.Cell>
                                                 <Table.Cell>{block.miner_id}</Table.Cell>
@@ -202,12 +202,12 @@ function MiningPage() {
                                 </Table.Root>
                             </>
                         )}
-                    </ul>
-                    <ul>
+                    </div>
+                    <div>
                         {miners.length > 0 && (
                             <>
                                 <h2>Miners</h2>
-                                <Table.Root>
+                                <Table.Root variant='surface'>
                                     <Table.Header>
                                         <Table.Row>
                                             <Table.ColumnHeaderCell>Miner ID</Table.ColumnHeaderCell>
@@ -248,8 +248,10 @@ function MiningPage() {
                             </>
                             
                         )}
-                    </ul>
-                    <button onClick={handleAddMiner}>Add Miner</button>
+                    </div>
+                    <div>
+                        <button onClick={handleAddMiner}>Add Miner</button>
+                    </div>
                 </div>
             }
             

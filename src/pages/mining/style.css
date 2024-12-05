@@ -1,8 +1,9 @@
 @import "@radix-ui/colors/black-alpha.css";
 
-/* reset */
-button {
-    all: unset;
+.container {
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
 
 .SwitchRoot {
@@ -51,11 +52,4 @@ button {
 
 .SwitchRoot.opacity-50 {
     opacity: 0.5;
-}
-
-.Label {
-    color: white;
-    font-size: 15px;
-    line-height: 1;
-    user-select: none;
 }
