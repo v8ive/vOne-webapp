@@ -99,6 +99,10 @@ function MiningPage() {
         };
     }, [user]);
 
+    if (!user) {
+        return <p>Please sign in.</p>;
+    }
+
     const handleAddMiner = () => {
         if (!wsRef.current) {
             console.error('WebSocket connection not established');
@@ -159,10 +163,6 @@ function MiningPage() {
         });
         sendMessage(wsRef.current, messageJson);
     };
-
-    if (!user) {
-        return <p>Please sign in.</p>;
-    }
 
     return (
         <div>
