@@ -1,9 +1,11 @@
 import { useState } from 'react'
+
 import useAuthStore from '../../store/Auth'
 import { useNavigate } from 'react-router-dom';
 import reactLogo from '../../assets/react.svg'
 import viteLogo from '../../assets/vite.svg'
-import './home.css'
+
+import './index.css'
 
 function Home() {
     const { user, signOut } = useAuthStore()
@@ -29,7 +31,7 @@ function Home() {
 
             {/* Display sign-in status based on user state */}
             {user ? ( // Check if user exists in the state
-                <p>You are signed in as: {user.email} || <button onClick={signOut}>Sign Out</button></p>
+                <p>You are signed in as: {user.username} || <button onClick={signOut}>Sign Out</button></p>
             ) : (
                 <button onClick={() => navigate('/signin')}>Sign In</button>
             )}

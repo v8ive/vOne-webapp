@@ -1,7 +1,7 @@
+import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import useAuthStore from '../../store/Auth';
-import './signin.css'; // Assuming you have styles for signin.css
-import { useNavigate } from 'react-router-dom';
+import './index.css';
 
 function AuthForm() {
     const { signInWithDiscord, user, isLoading, error } = useAuthStore();
@@ -9,7 +9,7 @@ function AuthForm() {
 
     useEffect(() => {
         if (user) {
-            navigate('/profile'); // Redirect to profile page on successful login
+            navigate('/profile');
         }
     }, [user, navigate]);
 
@@ -17,8 +17,7 @@ function AuthForm() {
         try {
             await signInWithDiscord();
         } catch (error) {
-            console.error(error); // Log the error for debugging
-            // Display a user-friendly error message
+            console.error(error);
         }
     };
 

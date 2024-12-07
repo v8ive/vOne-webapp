@@ -98,21 +98,10 @@ const useAuthStore = create<UserState>((set) => ({
             }
             
         }
-        const { data, error } = await supabase
-            .from('wallets')
-            .select('*')
-            .eq('user_id', user.id);
-        if (error) {
-            console.error('Error fetching user wallets:', error);
-            // Handle the error, e.g., show an error message to the user
-            return;
-        }
-        const userWallets = data || [];
 
         set({ user: { 
             ...user,
             ...dbUser.data,
-            wallets: userWallets
         } });
     }
 }));

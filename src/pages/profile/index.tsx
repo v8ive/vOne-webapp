@@ -1,32 +1,14 @@
 import { useEffect, useState } from 'react';
-import WalletList from '../../components/walletList';
 import useAuthStore from '../../store/Auth';
-import './profile.css';
-import { createWallet, fetchUserWallets } from '../../utils/wallets';
-import { Wallet } from '../../types/Wallet';
+import './index.css';
 
 function UserProfile() {
     const { user, isLoading, error } = useAuthStore();
-    const [wallets, setWallets] = useState<Wallet[]>([]);
-
-    useEffect(() => {
-        if (user) {
-            fetchUserWallets(user.user_id)
-                .then((wallets: Wallet[]) => setWallets(wallets))
-                .catch((error) => console.error('Error fetching wallets:', error));
-        }
-    }, [user]);
 
     if (!user) return null;
 
     const handleSubmit = async () => {
-        try {
-            await createWallet(user);
-            const fetchedWallets = await fetchUserWallets(user.user_id);
-            setWallets(fetchedWallets);
-        } catch (error) {
-            console.error('Error creating wallet:', error);
-        }
+        return null;
     };
 
     const renderContent = () => {
@@ -50,8 +32,7 @@ function UserProfile() {
                     <h2>{user?.username}</h2>
                     <p>XP: {0}</p>
                 </div>
-                <button type="button" onClick={handleSubmit}>Create Wallet</button>
-                <WalletList wallets={wallets} />
+                <button type="button" onClick={handleSubmit}>Press Me!</button>
             </div>
         );
     };
