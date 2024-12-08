@@ -45,7 +45,6 @@
         "websocket": "^1.0.35",
         "winston": "^3.17.0",
         "zustand": "^5.0.1",
-        
     },
     "devDependencies": {
         "@eslint/js": "^9.15.0",
