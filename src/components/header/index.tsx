@@ -1,7 +1,13 @@
-import Dropdown from './Dropdown';
-import './header.css';
+import { Avatar, Button } from '@radix-ui/themes';
+import { DiscordLogoIcon } from '@radix-ui/react-icons';
+import useAuthStore from '../../store/Auth';
+import Dropdown from './dropdrown';
+import './index.css';
 
 function Header() {
+    const { user, signInWithDiscord } = useAuthStore();
+
+
     return (
         <header className='header'>
             <div className="header-container">
@@ -10,7 +16,23 @@ function Header() {
                     {/* Main header content, like a logo or title */}
                 </div>
                 <div className="profile-icon">
-                    {/* Profile icon or user initials */}
+                    {!user && (
+                        <>
+                            <Button variant='ghost'
+                                onClick={signInWithDiscord} >Sign In
+                                <DiscordLogoIcon />
+                            </Button>
+                        </>
+                    )}
+                    {user && (
+                        <Avatar
+                            size={'2'}
+                            radius={'full'}
+                            src={user.profile_picture}
+                            fallback={
+                                user.username.includes(' ') ? `${user.username.split(' ')[0][0]}${user.username.split(' ')[1][0]}` : user.username.slice(0, 2)
+                            } />
+                    )}
                 </div>
             </div>
         </header>

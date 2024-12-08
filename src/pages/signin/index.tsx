@@ -15,7 +15,7 @@ function AuthForm() {
 
     const handleSignInWithDiscord = async () => {
         try {
-            await signInWithDiscord();
+            signInWithDiscord();
         } catch (error) {
             console.error(error);
         }

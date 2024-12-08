@@ -1,10 +1,12 @@
 import { createContext, useContext } from 'react';
 
-export const WebSocketContext = createContext<{
+interface WebSocketContextParams {
     sendMessage: (message: string) => void;
     lastMessage: MessageEvent | null;
     readyState: number;
-} | null>(null);
+}
+
+export const WebSocketContext = createContext<WebSocketContextParams | null>(null);
 
 export const useWebSocketContext = () => {
     const context = useContext(WebSocketContext);

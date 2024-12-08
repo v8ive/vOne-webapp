@@ -8,7 +8,6 @@ import ProfilePage from "./pages/profile"
 import useAuthStore from "./store/Auth";
 
 import "@radix-ui/themes/styles.css";
-import { Theme } from "@radix-ui/themes";
 
 import './App.css';
 
@@ -20,15 +19,13 @@ function App() {
     }, []);
 
     return (
-        <BrowserRouter>
-            <Theme appearance="dark" >
-                <Header />
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/signin" element={<SignInPage />} />
-                    <Route path="/profile" element={<ProfilePage />} />
-                </Routes>
-            </Theme>
+            <BrowserRouter>
+                    <Header />
+                    <Routes>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/signin" element={<SignInPage />} />
+                        <Route path="/profile" element={<ProfilePage />} />
+                    </Routes>
         </BrowserRouter>
     )
 }
