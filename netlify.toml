@@ -2,6 +2,3 @@
   from = "/*"
   to = "/index.html"
   status = 200
-
-[build]
-  command = "rm -rf node_modules package-lock.json && npm install"
