@@ -10,7 +10,7 @@
         "start": "vite",
         "host": "vite --host --port 3000",
         "deploy": "npm install vite-plugin-pwa && tsc -b && vite build --mode production",
-        "build": "tsc -b && vite build",
+        "build": "npm install vite-plugin-pwa && tsc -b && vite build",
         "lint": "eslint .",
         "preview": "vite preview"
     },
