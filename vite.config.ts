@@ -10,14 +10,14 @@ export default defineConfig({
       VitePWA({
           registerType: 'autoUpdate',
           manifest: {
-            "name": "vOne",
-            "short_name": "vOne",
-            "description": "v8iveOne",
-            "start_url": "/",
-            "display": "standalone",
-            "background_color": "#000000",
-            "theme_color": "#000000",
-            "icons": [
+            name: "vOne",
+            short_name: "vOne",
+            description: "v8iveOne",
+            start_url: "/",
+            display: "standalone",
+            backgroundColor: "#000000",
+            themeColor: "#000000",
+            icons: [
                 {
                     "src": "/assets/icons/icon-96x96.png",
                     "sizes": "96x96",
