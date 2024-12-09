@@ -19,12 +19,6 @@ function App() {
         initialize();
     }, []);
 
-    useEffect(() => {
-        if (!user) {
-            navigate('/');
-        }
-    }, [user, navigate]);
-
     return (
         <>
             <Header />
