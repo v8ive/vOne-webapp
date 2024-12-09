@@ -76,18 +76,21 @@ function Header() {
                     justifyContent: 'flex-end',
                     gap: '10px',
                     flex: 1,
+                    zIndex: 1,
                 }}>
-                    <div className="">
                         {!user && (
                             isLoading ?
                                 <>
                                 </> :
-                                <>
                                     <Button name='sign in' variant='ghost'
-                                        onClick={signInWithDiscord} >Sign In
+                                        onClick={signInWithDiscord}
+                                        style={{
+                                            cursor: 'pointer',
+                                        }}
+                                        >
+                                            Sign In
                                         <DiscordLogoIcon />
                                     </Button>
-                                </>
                         )}
                         {user && (
                             <Avatar
@@ -102,7 +105,6 @@ function Header() {
                                 onClick={() => navigate('/profile')}
                             />
                         )}
-                    </div>
                 </Box>
             </Flex>
         </Section>

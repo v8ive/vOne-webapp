@@ -17,10 +17,10 @@
 }
 .theme-toggle:hover {
     cursor: pointer;
-    animation: theme-toggle-spin-ease-in 0.4s ease-in forwards;
+    animation: theme-toggle-spin-ease-in 0.5s ease-in forwards;
 }
 .theme-toggle:not(:hover) {
-    animation: theme-toggle-spin-ease-out 0.4s ease-out forwards;
+    animation: theme-toggle-spin-ease-out 0.5s ease-out forwards;
 }
 @keyframes theme-toggle-spin-ease-in {
     0% {
@@ -82,14 +82,14 @@
     }
 
     100% {
-        transform: scale(1.75) translateY(10px);
+        transform: scale(1.5) translateY(5px);
     }
 }
 @keyframes logo-shrink {
 
     /* Define shrink animation */
     0% {
-        transform: scale(1.75) translateY(10px);
+        transform: scale(1.5) translateY(5px);
     }
 
     100% {
@@ -110,12 +110,12 @@
     }
 
     100% {
-        transform: scale(1.75) translateY(10px);
+        transform: scale(1.5) translateY(5px);
     }
 }
 @keyframes profile-shrink {
     0% {
-        transform: scale(1.75) translateY(10px);
+        transform: scale(1.5) translateY(5px);
     }
 
     100% {
