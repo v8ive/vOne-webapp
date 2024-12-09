@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 
 import Header from './components/header';
@@ -12,8 +12,7 @@ import "@radix-ui/themes/styles.css";
 import './App.css';
 
 function App() {
-    const { initialize, user } = useAuthStore();
-    const navigate = useNavigate();
+    const { initialize } = useAuthStore();
 
     useEffect(() => {
         initialize();
