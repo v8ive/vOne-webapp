@@ -18,7 +18,7 @@ function Header() {
                 <div className="profile-icon">
                     {!user && (
                         <>
-                            <Button variant='ghost'
+                            <Button name='sign in' variant='ghost'
                                 onClick={signInWithDiscord} >Sign In
                                 <DiscordLogoIcon />
                             </Button>

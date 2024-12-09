@@ -13,7 +13,7 @@ function Dropdown() {
     return (
         <DropdownMenu.Root>
             <DropdownMenu.Trigger>
-                <IconButton variant='ghost' style={{ marginTop: '1px' }}>
+                <IconButton name='main menu dropdown' variant='ghost' style={{ marginTop: '1px' }}>
                     <FontAwesomeIcon icon={faBars} />
                 </IconButton>
             </DropdownMenu.Trigger>
@@ -36,7 +36,7 @@ function Dropdown() {
                         </DropdownMenu.Item>
                         <AlertDialog.Root>
                             <AlertDialog.Trigger>
-                                <Button color="red" variant='soft'>Sign Out</Button>
+                                <Button name='sign out' color="red" variant='soft'>Sign Out</Button>
                             </AlertDialog.Trigger>
                             <AlertDialog.Content maxWidth="450px">
                                 <AlertDialog.Title>Sign Out?</AlertDialog.Title>
@@ -46,12 +46,12 @@ function Dropdown() {
 
                                 <Flex gap="3" mt="4" justify="end">
                                     <AlertDialog.Cancel>
-                                        <Button variant="soft" color="gray">
+                                        <Button name='cancel' variant="soft" color="gray">
                                             Cancel
                                         </Button>
                                     </AlertDialog.Cancel>
                                     <AlertDialog.Action>
-                                        <Button variant="solid" color="red"
+                                        <Button name='sign out' variant="solid" color="red"
                                             onClick={signOut}>
                                             Sign Out
                                         </Button>
