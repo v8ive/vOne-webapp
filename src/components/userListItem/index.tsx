@@ -33,14 +33,22 @@ const UserListItem: React.FC<UserListItemProps> = ({ user }) => {
             <Box maxWidth={"185px"}>
                 <HoverCard.Root>
                     <HoverCard.Trigger>
-                        <Card size={'1'}>
+                        <Card size={'1'} variant='ghost' style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            margin: '.5px',
+                            cursor: 'pointer',
+                            borderRadius: '10px',
+                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            border: '1px solid transparent'
+                        }}>
                             <Flex gap={"2"} align={"center"}>
                                 <Avatar
                                     src={profile_picture && profile_picture !== '' ? profile_picture : undefined}
                                     size={"3"}
                                     radius='large'
-                                    fallback={username.includes(' ') ? `${username.split(' ')[0][0]}${username.split(' ')[1][0]}` : username.slice(0, 2)}
-                                    alt={username.includes(' ') ? `${username.split(' ')[0][0]}${username.split(' ')[1][0]}` : username.slice(0, 2)}
+                                    fallback={username.includes(' ') ? `${username.split(' ')[0][0]}${username.split(' ')[1][0]}` : username.includes('-') ? `${username.split('-')[0][0]}${username.split('-')[1][0]}` : username.slice(0, 2)}
+                                    alt={username.includes(' ') ? `${username.split(' ')[0][0]}${username.split(' ')[1][0]}` : username.includes('-') ? `${username.split('-')[0][0]}${username.split('-')[1][0]}` : username.slice(0, 2)}
                                 />
                                 <Box>
                                     <Text as={"div"} size="2" weight={"bold"}>
@@ -53,7 +61,7 @@ const UserListItem: React.FC<UserListItemProps> = ({ user }) => {
                             </Flex>
                         </Card>
                     </HoverCard.Trigger>
-                    <HoverCard.Content maxWidth={'300px'} size={'3'}>
+                    <HoverCard.Content maxWidth={'300px'} size={'1'}>
                             <Text as={"div"} size="2" weight={"bold"}>
                                 {username}
                             </Text>
