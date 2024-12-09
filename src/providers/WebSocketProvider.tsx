@@ -1,24 +1,19 @@
-import { useState, useEffect, ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import useWebSocket from 'react-use-websocket';
 import { WebSocketContext } from '../context/WebSocketContext';
 import useAuthStore from '../store/Auth';
 
-interface WebSocketParams {
-    url: string;
-    queryParams?: { user_id: string };
-}
-
 export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
     const { user } = useAuthStore();
-    const [wsParams, setWsParams] = useState<WebSocketParams | null>(null);
+    
     const {
         sendMessage,
         lastMessage,
         readyState,
         getWebSocket
     } = useWebSocket(
-        wsParams?.url ?? '', {
-        queryParams: wsParams?.queryParams,
+        import.meta.env.VITE_WEBSOCKET_URL, {
+        queryParams: user ? { user_id: user.user_id } : undefined,
         share: true,
         onOpen: () => {
             console.log(`Connected to WebSocket`);
@@ -45,26 +40,11 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
         },
     });
 
-    const ws = getWebSocket();
-
     useEffect(() => {
-        if (ws) {
-            ws.close();
+        if (getWebSocket && !user) {
+            getWebSocket()?.close();
         }
-        if (user) {
-            setWsParams({
-                url: import.meta.env.VITE_WEBSOCKET_URL,
-                queryParams: {
-                    user_id: user.user_id,
-                },
-            })
-        } else {
-            setWsParams({
-                url: import.meta.env.VITE_WEBSOCKET_URL
-            });
-        }
-        
-    }, [user, ws]);
+    }, [user]);
 
 
     return (

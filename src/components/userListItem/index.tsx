@@ -41,6 +41,7 @@ const UserListItem: React.FC<UserListItemProps> = ({ user }) => {
                                     size={"3"}
                                     radius='large'
                                     fallback={username.includes(' ') ? `${username.split(' ')[0][0]}${username.split(' ')[1][0]}` : username[0]}
+                                    alt={username.includes(' ') ? `${username.split(' ')[0][0]}${username.split(' ')[1][0]}` : username[0]}
                                 />
                                 <Box>
                                     <Text as={"div"} size="2" weight={"bold"}>
