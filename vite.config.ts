@@ -20,66 +20,27 @@ export default defineConfig({
             theme_color: "#000",
             icons: [
                 {
-                    src: "/assets/icons/icon_x96-transparent.png",
-                    sizes: "96x96",
-                    type: "image/png"
-                },
-                {
-                    src: "/assets/icons/icon_x192-transparent.png",
-                    sizes: "192x192",
-                    type: "image/png"
-                },
-                {
-                    src: "/assets/icons/icon_x512-transparent.png",
-                    sizes: "512x512",
-                    type: "image/png"
-                },
-                {
                     purpose: "maskable",
                     sizes: "1046x1046",
-                    src: "/assets/icons/maskable_icon.png",
-                    type: "image/png"
-                },
-                {
-                    purpose: "maskable",
-                    sizes: "48x48",
-                    src: "/assets/icons/maskable_icon_x48.png",
-                    type: "image/png"
-                },
-                {
-                    purpose: "maskable",
-                    sizes: "72x72",
-                    src: "/assets/icons/maskable_icon_x72.png",
+                    src: "/assets/icons/maskable_transparent/icon-transparent.png",
                     type: "image/png"
                 },
                 {
                     purpose: "maskable",
                     sizes: "96x96",
-                    src: "/assets/icons/maskable_icon_x96.png",
-                    type: "image/png"
-                },
-                {
-                    purpose: "maskable",
-                    sizes: "128x128",
-                    src: "/assets/icons/maskable_icon_x128.png",
+                    src: "/assets/icons/maskable_transparent/icon_x96-transparent.png",
                     type: "image/png"
                 },
                 {
                     purpose: "maskable",
                     sizes: "192x192",
-                    src: "/assets/icons/maskable_icon_x192.png",
-                    type: "image/png"
-                },
-                {
-                    purpose: "maskable",
-                    sizes: "384x384",
-                    src: "/assets/icons/maskable_icon_x384.png",
+                    src: "/assets/icons/maskable_transparent/icon_x192-transparent.png",
                     type: "image/png"
                 },
                 {
                     purpose: "maskable",
                     sizes: "512x512",
-                    src: "/assets/icons/maskable_icon_x512.png",
+                    src: "/assets/icons/maskable_transparent/icon_x512-transparent.png",
                     type: "image/png"
                 }
             ]

@@ -1,4 +1,5 @@
 
+import { Avatar, Box, Heading } from '@radix-ui/themes';
 import useAuthStore from '../../store/Auth';
 import './index.css';
 
@@ -15,15 +16,26 @@ function UserProfile() {
         if (!user) return null;
 
         return (
-            <div className="user-profile">
-                <div className="user-info">
-                    <div className="profile-picture">
-                        <img src={`https://ui-avatars.com/api/?name=${ user ? user.username : 'John+Doe' }`} alt="Profile Picture" />
-                    </div>
-                    <h2>{user?.username}</h2>
-                    <p>XP: {0}</p>
-                </div>
-            </div>
+            <Box>
+                <Avatar
+                    src={user.profile_picture && user.profile_picture !== '' ? user.profile_picture : undefined}
+                    size={"9"}
+                    radius='large'
+                    fallback={user.username.includes(' ') ? `${user.username.split(' ')[0][0]}${user.username.split(' ')[1][0]}` : user.username.slice(0, 2)}
+                    alt={user.username.includes(' ') ? `${user.username.split(' ')[0][0]}${user.username.split(' ')[1][0]}` : user.username.slice(0, 2)}
+                />
+                <Box>
+                    <Box>
+                        <Heading
+                            size="8"
+                            weight="bold"
+                            >{user.username}</Heading>
+                    </Box>
+                    <Box>
+                        <p>{user.status}</p>
+                    </Box>
+                </Box>
+            </Box>
         );
     };
 
