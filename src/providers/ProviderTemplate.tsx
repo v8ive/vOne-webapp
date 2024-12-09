@@ -1,3 +1,4 @@
+import { Box } from '@radix-ui/themes';
 import { ReactNode } from 'react';
 
 interface ProviderParams {
@@ -6,8 +7,8 @@ interface ProviderParams {
 
 export const Provider = ({ children }: ProviderParams) => {
     return (
-        <div>
+        <Box>
             {children}
-        </div>
+        </Box>
     );
 };

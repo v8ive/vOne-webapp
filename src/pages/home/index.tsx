@@ -1,20 +1,11 @@
 import { Box, Flex, Heading, Section } from "@radix-ui/themes";
 import UserList from "../../components/userList";
 import "./index.css";
-import { Vortex } from "../../components/ui/vortex";
 
 function Home() {
+
     return (
         <>
-            <Vortex
-                backgroundColor="black"
-                rangeY={800}
-                particleCount={100}
-                baseHue={200}
-                baseSpeed={0.1}
-                className="flex items-center flex-col justify-center"
-                containerClassName="" // Use z-[-1]
-            />
             <Box
                 style={{
                     display: "flex",
@@ -29,7 +20,7 @@ function Home() {
                     <Heading size={"9"}>v8ive.one</Heading>
                 </Section>
 
-                <Flex align="center" justify="center">
+                <Flex align="center" justify="center" className="">
                     <Heading size={"4"}>Users</Heading>
                 </Flex>
 

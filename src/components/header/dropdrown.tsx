@@ -1,10 +1,9 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../store/Auth';
 import { AlertDialog, Button, DropdownMenu, Flex, IconButton } from '@radix-ui/themes';
-import './dropdown.css';
 import { DiscordLogoIcon } from '@radix-ui/react-icons';
+import { EllipsisVertical } from 'lucide-react';
+import './dropdown.css';
 
 function Dropdown() {
     const navigate = useNavigate();
@@ -14,7 +13,7 @@ function Dropdown() {
         <DropdownMenu.Root>
             <DropdownMenu.Trigger>
                 <IconButton name='main menu dropdown' variant='ghost' style={{ marginTop: '1px' }}>
-                    <FontAwesomeIcon icon={faBars} />
+                    <EllipsisVertical size={24}/>
                 </IconButton>
             </DropdownMenu.Trigger>
             <DropdownMenu.Content>

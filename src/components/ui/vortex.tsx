@@ -263,7 +263,8 @@ export const Vortex = (props: VortexProps) => {
                     top: 0,
                     left: 0,
                     width: "100vw",
-                    height: "100vh"
+                    height: "100vh",
+                    zIndex: -10,
                 }}
             >
                 <canvas ref={canvasRef}></canvas>

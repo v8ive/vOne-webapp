@@ -2,12 +2,12 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ErrorOverlayProvider } from './providers/ErrorOverlayProvider.tsx'
 import { WebSocketProvider } from './providers/WebSocketProvider.tsx'
-import App from './App.tsx'
-import './index.css'
 import { UsersProvider } from './providers/UsersProvider.tsx'
-import { Theme } from '@radix-ui/themes'
 import { ThemeProvider } from 'next-themes'
 import { BrowserRouter } from 'react-router-dom'
+import App from './App.tsx'
+import './index.css'
+import { ColorSchemeProvider } from './providers/ColorSchemeProvider.tsx'
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
@@ -16,14 +16,9 @@ createRoot(document.getElementById('root')!).render(
                 <ErrorOverlayProvider>
                     <UsersProvider>
                         <ThemeProvider>
-                            <Theme
-                                hasBackground
-                                appearance={window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'}
-                                accentColor='violet'
-                                panelBackground='translucent'
-                            >
+                            <ColorSchemeProvider>
                                 <App />
-                            </Theme>
+                            </ColorSchemeProvider>
                         </ThemeProvider>
                     </UsersProvider>
                 </ErrorOverlayProvider>

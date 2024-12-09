@@ -5,12 +5,120 @@
 }
 
 .header-container {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 20px;
     max-width: 1200px;
-    margin: 0 auto;
     height: 1vh;
 }
 
+.theme-toggle {
+    z-index: 1;
+    align-items: center;
+}
+.theme-toggle:hover {
+    cursor: pointer;
+    animation: theme-toggle-spin-ease-in 0.4s ease-in forwards;
+}
+.theme-toggle:not(:hover) {
+    animation: theme-toggle-spin-ease-out 0.4s ease-out forwards;
+}
+@keyframes theme-toggle-spin-ease-in {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    30% {
+        transform: rotate(160deg);
+    }
+
+    60% {
+        transform: rotate(210deg);
+    }
+
+    80% {
+        transform: rotate(170deg);
+    }
+
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes theme-toggle-spin-ease-out {
+    0% {
+        transform: rotate(180deg);
+    }
+
+    30% {
+        transform: rotate(20deg);
+    }
+
+    60% {
+        transform: rotate(-30deg);
+    }
+
+    80% {
+        transform: rotate(10deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.header-logo img {
+    transition: all 0.5s;
+}
+.header-logo:hover {
+    cursor: pointer;
+    animation: logo-grow 0.2s ease-in forwards;
+}
+.header-logo:not(:hover) {
+    animation: logo-shrink 0.2s ease-out forwards;
+}
+@keyframes logo-grow {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.75) translateY(10px);
+    }
+}
+@keyframes logo-shrink {
+
+    /* Define shrink animation */
+    0% {
+        transform: scale(1.75) translateY(10px);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.profile-icon:hover {
+    cursor: pointer;
+    animation: profile-grow 0.2s ease-in forwards;
+}
+.profile-icon:not(:hover) {
+    animation: profile-shrink 0.2s ease-out forwards;
+}
+@keyframes profile-grow {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.75) translateY(10px);
+    }
+}
+@keyframes profile-shrink {
+    0% {
+        transform: scale(1.75) translateY(10px);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}

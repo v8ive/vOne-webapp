@@ -1,12 +1,13 @@
-import React from 'react';
 import { Avatar, Box, Card, Flex, HoverCard, Text } from '@radix-ui/themes';
 import { UserStatePayload } from '../../types/UserStatePayload';
+import { useColorScheme } from '../../context/ColorSchemeContext';
 
 interface UserListItemProps {
     user: UserStatePayload;
 }
 
 const UserListItem: React.FC<UserListItemProps> = ({ user }) => {
+    const { mode } = useColorScheme();
     const { username, status, last_online, profile_picture } = user.user_state;
     const statusColor = status === 'online' ? 'green' : status === 'offline' ? 'gray' : 'yellow';
 
@@ -39,7 +40,7 @@ const UserListItem: React.FC<UserListItemProps> = ({ user }) => {
                             margin: '.5px',
                             cursor: 'pointer',
                             borderRadius: '10px',
-                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            backgroundColor: mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.2)',
                             border: '1px solid transparent'
                         }}>
                             <Flex gap={"2"} align={"center"}>
