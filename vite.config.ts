@@ -20,25 +20,25 @@ export default defineConfig({
             theme_color: "#000",
             icons: [
                 {
-                    purpose: "maskable",
+                    purpose: "any maskable",
                     sizes: "1046x1046",
                     src: "/assets/icons/maskable_transparent/icon-transparent.png",
                     type: "image/png"
                 },
                 {
-                    purpose: "maskable",
+                    purpose: "any maskable",
                     sizes: "96x96",
                     src: "/assets/icons/maskable_transparent/icon_x96-transparent.png",
                     type: "image/png"
                 },
                 {
-                    purpose: "maskable",
+                    purpose: "any maskable",
                     sizes: "192x192",
                     src: "/assets/icons/maskable_transparent/icon_x192-transparent.png",
                     type: "image/png"
                 },
                 {
-                    purpose: "maskable",
+                    purpose: "any maskable",
                     sizes: "512x512",
                     src: "/assets/icons/maskable_transparent/icon_x512-transparent.png",
                     type: "image/png"
