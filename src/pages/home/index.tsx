@@ -21,7 +21,8 @@ function Home() {
                     flexDirection: "column",
                     gap: "5px",
                     padding: "10px",
-                    zIndex: 1, // Ensure content is above the background
+                    zIndex: 1,
+                    position: "relative",
                 }}
             >
                 <Section>

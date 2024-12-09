@@ -1,13 +1,28 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import UserListItem from '../userListItem';
 import { useUsersContext } from '../../context/UsersContext';
 import { Box, Flex, Spinner } from '@radix-ui/themes';
+import { useWebSocketContext } from '../../context/WebSocketContext';
 
 const UserList: React.FC = () => {
     const { users } = useUsersContext();
+    const { lastMessage } = useWebSocketContext();
+    const [loading, setLoading] = useState(true);
 
-    if (Object.keys(users).length === 0) {
-        return <Flex align='center'><Spinner /></Flex>;
+    useEffect(() => {
+        if (loading) {
+            if (Object.keys(users).length > 0) {
+                setLoading(false);
+            }
+        }
+    }, [lastMessage, users, loading]);
+
+    if (loading) {
+        return (
+            <Flex align="center" justify="center" style={{ marginTop: '25px' }}>
+                <Spinner size={'3'} />
+            </Flex>
+        );
     }
 
     return (
