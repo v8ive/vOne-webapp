@@ -9,6 +9,6 @@
         },
     ],
     "exclude": [
-        "./src/components/ui/vortex.tsx"
+        "src/components/ui/vortex.tsx"
     ]
 }
