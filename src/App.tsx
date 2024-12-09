@@ -59,7 +59,7 @@ function App() {
             <Vortex
                 backgroundColor={mode === "dark" ? "black" : "transparent"}
                 rangeY={800}
-                particleCount={100}
+                particleCount={25}
                 baseHue={200}
                 baseSpeed={0.1}
             />
