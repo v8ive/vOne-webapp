@@ -15,8 +15,8 @@ export default defineConfig({
             description: "v8iveOne",
             start_url: "/",
             display: "standalone",
-            background_color: "#000000",
-            theme_color: "#000000",
+            background_color: "#000",
+            theme_color: "#000",
             icons: [
                 {
                     "src": "/assets/icons/icon-96x96.png",
