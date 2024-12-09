@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 import Header from './components/header';
@@ -12,21 +12,28 @@ import "@radix-ui/themes/styles.css";
 import './App.css';
 
 function App() {
-    const { initialize } = useAuthStore();
+    const { initialize, user } = useAuthStore();
+    const navigate = useNavigate();
 
     useEffect(() => {
         initialize();
     }, []);
 
+    useEffect(() => {
+        if (!user) {
+            navigate('/');
+        }
+    }, [user, navigate]);
+
     return (
-            <BrowserRouter>
-                    <Header />
-                    <Routes>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/signin" element={<SignInPage />} />
-                        <Route path="/profile" element={<ProfilePage />} />
-                    </Routes>
-        </BrowserRouter>
+        <>
+            <Header />
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/signin" element={<SignInPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+            </Routes>
+        </>
     )
 }
 
