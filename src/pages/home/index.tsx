@@ -12,7 +12,7 @@ function Home() {
                 particleCount={100}
                 baseHue={200}
                 baseSpeed={0.1}
-                className="flex items-center flex-col justify-center px-2 md:px-10  py-4 w-full h-full"
+                className="flex items-center flex-col justify-center"
                 containerClassName="" // Use z-[-1]
             />
             <Box

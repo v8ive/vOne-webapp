@@ -6,18 +6,18 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(),
-        VitePWA({
-          injectRegister: "inline",
-          registerType: 'autoUpdate',
-          manifest: {
+    plugins: [react(),
+    VitePWA({
+        injectRegister: "inline",
+        registerType: 'autoUpdate',
+        manifest: {
             name: "vOne",
             short_name: "vOne",
             description: "v8iveOne",
             start_url: "/",
             display: "standalone",
-            background_color: "#000",
-            theme_color: "#000",
+            background_color: "#000000",
+            theme_color: "#000000",
             icons: [
                 {
                     purpose: "any maskable",
@@ -44,8 +44,8 @@ export default defineConfig({
                     type: "image/png"
                 }
             ]
-          },
-        }),
+        },
+    }),
     ],
     css: {
         postcss: {

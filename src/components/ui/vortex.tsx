@@ -258,22 +258,19 @@ export const Vortex = (props: VortexProps) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 ref={containerRef}
-                style={{
-                    zIndex: -1,
-                    position: "absolute",
+                style={{ 
+                    position: "fixed",
                     top: 0,
                     left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: backgroundColor,
+                    width: "100vw",
+                    height: "100vh"
                 }}
             >
                 <canvas ref={canvasRef}></canvas>
             </motion.div>
 
-            <Box>
-                {props.children}
-            </Box>
+            {props.children}
+
         </Box>
     );
 };
