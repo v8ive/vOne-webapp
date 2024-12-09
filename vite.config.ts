@@ -8,6 +8,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 export default defineConfig({
   plugins: [react(),
       VitePWA({
+          injectRegister: "inline"
           registerType: 'autoUpdate',
           manifest: {
             name: "vOne",
