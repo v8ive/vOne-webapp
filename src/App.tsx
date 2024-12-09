@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import Header from './components/header';
 import HomePage from "./pages/home"
@@ -15,9 +15,8 @@ import { useColorScheme } from "./context/ColorSchemeContext";
 import { Vortex } from "./components/ui/vortex";
 
 function App() {
-    const { user, initialize } = useAuthStore();
+    const { initialize } = useAuthStore();
     const { mode } = useColorScheme();
-    const navigate = useNavigate();
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -37,13 +36,6 @@ function App() {
             }
         }
     }, []);
-
-    useEffect(() => {
-        if (!user) {
-            navigate("/");
-        }
-    }, [user]);
-
 
     useEffect(() => {
         initialize();
