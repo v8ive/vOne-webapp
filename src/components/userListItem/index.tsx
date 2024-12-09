@@ -7,8 +7,7 @@ interface UserListItemProps {
 }
 
 const UserListItem: React.FC<UserListItemProps> = ({ user }) => {
-    const { username, status, last_online } = user.user_state;
-    const avatarUrl = `https://ui-avatars.com/api/?name=${username}`;
+    const { username, status, last_online, profile_picture } = user.user_state;
     const statusColor = status === 'online' ? 'green' : status === 'offline' ? 'gray' : 'yellow';
 
     const getTimeSince = (timestamp: number) => {
@@ -37,11 +36,11 @@ const UserListItem: React.FC<UserListItemProps> = ({ user }) => {
                         <Card size={'1'}>
                             <Flex gap={"2"} align={"center"}>
                                 <Avatar
-                                    src={avatarUrl}
+                                    src={profile_picture && profile_picture !== '' ? profile_picture : undefined}
                                     size={"3"}
                                     radius='large'
-                                    fallback={username.includes(' ') ? `${username.split(' ')[0][0]}${username.split(' ')[1][0]}` : username[0]}
-                                    alt={username.includes(' ') ? `${username.split(' ')[0][0]}${username.split(' ')[1][0]}` : username[0]}
+                                    fallback={username.includes(' ') ? `${username.split(' ')[0][0]}${username.split(' ')[1][0]}` : username.slice(0, 2)}
+                                    alt={username.includes(' ') ? `${username.split(' ')[0][0]}${username.split(' ')[1][0]}` : username.slice(0, 2)}
                                 />
                                 <Box>
                                     <Text as={"div"} size="2" weight={"bold"}>
