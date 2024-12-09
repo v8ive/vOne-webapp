@@ -5,7 +5,7 @@ import Dropdown from './dropdrown';
 import './index.css';
 
 function Header() {
-    const { user, signInWithDiscord } = useAuthStore();
+    const { user, isLoading, signInWithDiscord } = useAuthStore();
 
 
     return (
@@ -17,6 +17,9 @@ function Header() {
                 </div>
                 <div className="profile-icon">
                     {!user && (
+                        isLoading ? 
+                        <>
+                        </> :
                         <>
                             <Button name='sign in' variant='ghost'
                                 onClick={signInWithDiscord} >Sign In
