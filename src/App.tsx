@@ -19,6 +19,26 @@ function App() {
     const { mode } = useColorScheme();
 
     useEffect(() => {
+        if (typeof window !== "undefined") {
+            // Check if running in the browser
+            const metaThemeColor = document.querySelector(
+                'meta[name="theme-color"]'
+            );
+            if (metaThemeColor) {
+                metaThemeColor.setAttribute("content", (mode === 'dark' ? '#000000' : '#ffffff'));
+            }
+
+            const appleMobileWebAppStatusBarStyle = document.querySelector(
+                'meta[name="apple-mobile-web-app-status-bar-style"]'
+            );
+            if (appleMobileWebAppStatusBarStyle) {
+                appleMobileWebAppStatusBarStyle.setAttribute("content", (mode === 'dark' ? 'dark-content' : 'light-content'));
+            }
+        }
+    }, []);
+
+
+    useEffect(() => {
         initialize();
     }, []);
 
