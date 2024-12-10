@@ -1,13 +1,13 @@
 import { Avatar, Box, Card, Flex, HoverCard, Text } from '@radix-ui/themes';
 import { UserStatePayload } from '../../types/UserStatePayload';
-import { useColorScheme } from '../../context/ColorSchemeContext';
+import { useCustomTheme } from '../../context/CustomThemeContext';
 
 interface UserListItemProps {
     user: UserStatePayload;
 }
 
 const UserListItem: React.FC<UserListItemProps> = ({ user }) => {
-    const { mode } = useColorScheme();
+    const { mode } = useCustomTheme();
     const { username, status, last_online, profile_picture } = user.user_state;
     const statusColor = status === 'online' ? 'green' : status === 'offline' ? 'gray' : 'yellow';
 

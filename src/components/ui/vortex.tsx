@@ -32,7 +32,7 @@ export const Vortex = (props: VortexProps) => {
     const baseRadius = props.baseRadius || 1;
     const rangeRadius = props.rangeRadius || 2;
     const baseHue = props.baseHue || 220;
-    const rangeHue = 100;
+    const rangeHue = 60;
     const noiseSteps = 3;
     const xOff = 0.00125;
     const yOff = 0.00125;
@@ -83,7 +83,7 @@ export const Vortex = (props: VortexProps) => {
         const vx = 0;
         const vy = 0;
         const ttl = baseTTL + rand(rangeTTL);
-        const hue = baseHue + rand(rangeHue);
+        const hue = baseHue //+ rand(rangeHue);
         const radius = baseRadius + rand(rangeRadius);
         const speed = baseSpeed + rand(rangeSpeed);
         const life = 0;

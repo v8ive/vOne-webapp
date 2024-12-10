@@ -7,7 +7,7 @@ import { ThemeProvider } from 'next-themes'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App.tsx'
 import './index.css'
-import { ColorSchemeProvider } from './providers/ColorSchemeProvider.tsx'
+import { CustomThemeProvider } from './providers/CustomThemeProvider.tsx'
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
@@ -16,9 +16,9 @@ createRoot(document.getElementById('root')!).render(
                 <ErrorOverlayProvider>
                     <UsersProvider>
                         <ThemeProvider>
-                            <ColorSchemeProvider>
+                            <CustomThemeProvider>
                                 <App />
-                            </ColorSchemeProvider>
+                            </CustomThemeProvider>
                         </ThemeProvider>
                     </UsersProvider>
                 </ErrorOverlayProvider>

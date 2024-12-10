@@ -3,17 +3,32 @@ import useAuthStore from '../../store/Auth';
 import { AlertDialog, Button, DropdownMenu, Flex, IconButton } from '@radix-ui/themes';
 import { DiscordLogoIcon } from '@radix-ui/react-icons';
 import { EllipsisVertical } from 'lucide-react';
+import { ThemeName, ThemeNames } from '../../types/Theme';
+import { useCustomTheme } from '../../context/CustomThemeContext';
+import { supabase } from '../../store/Auth';
 import './dropdown.css';
 
 function Dropdown() {
     const navigate = useNavigate();
     const { user, signInWithDiscord, signOut } = useAuthStore();
+    const { setThemeName } = useCustomTheme();
+
+    const handleThemeChange = async (theme_name: ThemeName) => {
+        if (!user) return;
+        const { error } = await supabase.from('users').update({ theme_name }).eq('user_id', user.user_id);
+        if (error) {
+            console.error('Error updating user theme:', error);
+            return;
+        } else {
+            setThemeName(theme_name);
+        }
+    }
 
     return (
         <DropdownMenu.Root>
             <DropdownMenu.Trigger>
                 <IconButton name='main menu dropdown' variant='ghost' style={{ marginTop: '1px' }}>
-                    <EllipsisVertical size={24}/>
+                    <EllipsisVertical size={24} />
                 </IconButton>
             </DropdownMenu.Trigger>
             <DropdownMenu.Content>
@@ -33,6 +48,25 @@ function Dropdown() {
                         >
                             Profile
                         </DropdownMenu.Item>
+
+                        <DropdownMenu.Sub>
+                            <DropdownMenu.SubTrigger>
+                                    Change Theme
+                            </DropdownMenu.SubTrigger>
+
+                            <DropdownMenu.SubContent>
+                                {ThemeNames.map((theme_name) => (
+                                    <DropdownMenu.Item
+                                        key={theme_name}
+                                        onSelect={() => { handleThemeChange(theme_name) }}
+                                    >
+                                        {theme_name}
+                                    </DropdownMenu.Item>
+                                ))}
+                            </DropdownMenu.SubContent>
+
+                        </DropdownMenu.Sub>
+
                         <AlertDialog.Root>
                             <AlertDialog.Trigger>
                                 <Button name='sign out' color="red" variant='soft'>Sign Out</Button>

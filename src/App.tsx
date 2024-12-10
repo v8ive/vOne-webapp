@@ -11,12 +11,12 @@ import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
 
 import './App.css';
-import { useColorScheme } from "./context/ColorSchemeContext";
+import { useCustomTheme } from "./context/CustomThemeContext";
 import { Vortex } from "./components/ui/vortex";
 
 function App() {
     const { initialize } = useAuthStore();
-    const { mode } = useColorScheme();
+    const { mode, themeName } = useCustomTheme();
 
     useEffect(() => {
         if (typeof window !== "undefined") {
@@ -41,18 +41,47 @@ function App() {
         initialize();
     }, []);
 
+    const colorHues = {
+        'gray': 0,
+        'gold': 40,
+        'bronze': 30,
+        'brown': 20,
+        'yellow': 50,
+        'amber': 60,
+        'orange': 30,
+        'tomato': 10,
+        'red': 5,
+        'ruby': 6,
+        'crimson': 320,
+        'pink': 310,
+        'plum': 300,
+        'purple': 280,
+        'violet': 270,
+        'iris': 260,
+        'indigo': 250,
+        'blue': 240,
+        'cyan': 200,
+        'teal': 180,
+        'jade': 160,
+        'green': 140,
+        'grass': 120,
+        'lime': 100,
+        'mint': 190,
+        'sky': 230
+    }
+
     return (
         <Theme
             hasBackground
             appearance={mode}
-            accentColor='violet'
+            accentColor={themeName}
             panelBackground='translucent'
         >
             <Vortex
-                backgroundColor={mode === "dark" ? "black" : "transparent"}
+                backgroundColor={mode === 'dark' ? 'rgba(0, 0, 0, 0.5)' : 'transparent'}
                 rangeY={800}
-                particleCount={25}
-                baseHue={200}
+                particleCount={10}
+                baseHue={colorHues[themeName]}
                 baseSpeed={0.1}
             />
             <Header />

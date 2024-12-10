@@ -5,12 +5,12 @@ import useAuthStore from '../../store/Auth';
 import Dropdown from './dropdrown';
 import './index.css';
 import { useNavigate } from 'react-router-dom';
-import { useColorScheme } from '../../context/ColorSchemeContext';
+import { useCustomTheme } from '../../context/CustomThemeContext';
 
 function Header() {
     const { user, isLoading, signInWithDiscord } = useAuthStore();
     const navigate = useNavigate();
-    const { mode, setMode } = useColorScheme();
+    const { mode, setMode } = useCustomTheme();
 
     return (
         <Section className='header' style={{
