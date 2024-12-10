@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Flex, Section } from '@radix-ui/themes';
+import { Avatar, Box, Button, Flex, IconButton, Section } from '@radix-ui/themes';
 import { DiscordLogoIcon } from '@radix-ui/react-icons';
 import { Moon, Sun } from "lucide-react";
 import useAuthStore from '../../store/Auth';
@@ -76,20 +76,27 @@ function Header() {
                     display: 'flex',
                     justifyContent: 'flex-start',
                     paddingLeft: '25px',
-                    marginTop: '1px',
                     flex: 2,
                 }}>
                     {mode === 'dark' ?
-                        <Sun
-                            size={22}
-                            className='theme-toggle'
-                            onClick={handleToggleThemeMode}
-                        /> :
-                        <Moon
-                            size={22}
-                            className='theme-toggle'
-                            onClick={handleToggleThemeMode}
-                        />
+                        <IconButton variant='ghost' style={{
+                            marginTop: '1px',
+                        }}>
+                            <Sun
+                                size={24}
+                                className='theme-toggle'
+                                onClick={handleToggleThemeMode}
+                            />
+                        </IconButton> :
+                        <IconButton variant='ghost' style={{
+                            marginTop: '1px',
+                        }}>
+                            <Moon
+                                size={22}
+                                className='theme-toggle'
+                                onClick={handleToggleThemeMode}
+                            />
+                        </IconButton>
                     }
                 </Box>
 

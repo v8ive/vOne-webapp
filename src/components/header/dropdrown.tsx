@@ -27,8 +27,8 @@ function Dropdown() {
     return (
         <DropdownMenu.Root>
             <DropdownMenu.Trigger>
-                <IconButton name='main menu dropdown' variant='ghost' style={{ marginTop: '1px' }}>
-                    <EllipsisVertical size={24} />
+                <IconButton name='main menu dropdown' variant='ghost' style={{ marginTop: '1px', cursor: 'pointer' }}>
+                    <EllipsisVertical size={22} />
                 </IconButton>
             </DropdownMenu.Trigger>
             <DropdownMenu.Content>
