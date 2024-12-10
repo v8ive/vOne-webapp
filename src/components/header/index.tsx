@@ -3,14 +3,37 @@ import { DiscordLogoIcon } from '@radix-ui/react-icons';
 import { Moon, Sun } from "lucide-react";
 import useAuthStore from '../../store/Auth';
 import Dropdown from './dropdrown';
-import './index.css';
 import { useNavigate } from 'react-router-dom';
 import { useCustomTheme } from '../../context/CustomThemeContext';
+import { supabase } from '../../store/Auth';
+import './index.css';
 
 function Header() {
     const { user, isLoading, signInWithDiscord } = useAuthStore();
     const navigate = useNavigate();
     const { mode, setMode } = useCustomTheme();
+
+    const handleToggleThemeMode = async () => {
+        if (mode === 'dark') {
+            if (user) {
+                const { error } = await supabase.from('users').update({ theme_mode: 'light' }).eq('user_id', user.user_id);
+                if (error) {
+                    console.error('Error updating user theme mode:', error);
+                    return;
+                }
+            }
+            setMode('light');
+        } else {
+            if (user) {
+                const { error } = await supabase.from('users').update({ theme_mode: 'dark' }).eq('user_id', user.user_id);
+                if (error) {
+                    console.error('Error updating user theme mode:', error);
+                    return;
+                }
+            }
+            setMode('dark');
+        }
+    }
 
     return (
         <Section className='header' style={{
@@ -60,12 +83,12 @@ function Header() {
                         <Sun
                             size={22}
                             className='theme-toggle'
-                            onClick={() => setMode('light')}
+                            onClick={handleToggleThemeMode}
                         /> :
                         <Moon
                             size={22}
                             className='theme-toggle'
-                            onClick={() => setMode('dark')}
+                            onClick={handleToggleThemeMode}
                         />
                     }
                 </Box>
