@@ -40,8 +40,8 @@ const UserListItem: React.FC<UserListItemProps> = ({ user }) => {
                             margin: '.5px',
                             cursor: 'pointer',
                             borderRadius: '10px',
-                            backgroundColor: mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.2)',
-                            border: '1px solid transparent'
+                            backgroundColor: mode === 'dark' ? 'var(--accent-surface)' : 'var(--accent-7)',
+                            border: '1px solid var(--accent-10)',
                         }}>
                             <Flex gap={"2"} align={"center"}>
                                 <Avatar

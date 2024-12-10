@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { ColorSchemeContext } from '../context/CustomThemeContext';
 import { ThemeMode, ThemeName } from '../types/Theme';
-import useAuthStore from '../store/Auth';
+import useAuthStore, { supabase } from '../store/Auth';
 
 interface ProviderParams {
     children: ReactNode;
@@ -9,31 +9,36 @@ interface ProviderParams {
 
 export const CustomThemeProvider = ({ children }: ProviderParams) => {
     const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
-    const [mode, setMode] = useState<ThemeMode>(prefersDarkScheme.matches ? "dark" : "light");
-    const [themeName, setThemeName] = useState<ThemeName>("violet");
+    const [mode, setMode] = useState<ThemeMode>(localStorage.getItem('themeMode') as ThemeMode || "dark");
+    const [themeName, setThemeName] = useState<ThemeName>(localStorage.getItem('themeName') as ThemeName || "iris");
+    const user = useAuthStore((state) => state.user);
 
-    const { user } = useAuthStore();
-
-    const handleAutoChange = () => {
-        if (!user) {
-            setMode(prefersDarkScheme.matches ? "dark" : "light");
-        }
+    const changeModePreference = () => {
+        const theme_mode = prefersDarkScheme.matches ? "dark" : "light";
+        setMode(theme_mode);
     }
 
     useEffect(() => {
-        prefersDarkScheme.addEventListener("change", handleAutoChange);
+        prefersDarkScheme.addEventListener("change", changeModePreference);
 
         return () => {
-            prefersDarkScheme.removeEventListener("change", handleAutoChange);
+            prefersDarkScheme.removeEventListener("change", changeModePreference);
+            localStorage.setItem('themeMode', mode);
+            localStorage.setItem('themeName', themeName);
         }
-    }, [prefersDarkScheme]);
+    });
 
     useEffect(() => {
+        localStorage.setItem('themeMode', mode);
+        localStorage.setItem('themeName', themeName);
         if (user) {
-            setMode(user.theme_mode);
-            setThemeName(user.theme_name);
+            supabase.from('users').update({ theme_mode: mode, theme_name: themeName }).eq('id', user.id).then((response) => {
+                if (response.error) {
+                    console.error(response.error);
+                }
+            });
         }
-    }, [user]);
+    }, [mode, themeName, user]);
 
     return (
         <ColorSchemeContext.Provider value={{ mode, setMode, themeName, setThemeName }}>

@@ -1,13 +1,17 @@
 .header {
+    width: 100vw;
+    height: 48px;
     margin-bottom: 5%;
     position: relative;
     z-index: 1000;
 }
 
 .header-container {
-    align-items: center;
-    padding: 20px;
+    width: 100%;
     max-width: 1200px;
+    align-items: center;
+    justify-self: center;
+    padding: 20px;
     height: 1vh;
 }
 
@@ -43,7 +47,6 @@
         transform: rotate(180deg);
     }
 }
-
 @keyframes theme-toggle-spin-ease-out {
     0% {
         transform: rotate(180deg);
@@ -82,14 +85,14 @@
     }
 
     100% {
-        transform: scale(1.5) translateY(5px);
+        transform: scale(1.20);
     }
 }
 @keyframes logo-shrink {
 
     /* Define shrink animation */
     0% {
-        transform: scale(1.5) translateY(5px);
+        transform: scale(1.20);
     }
 
     100% {
@@ -110,12 +113,12 @@
     }
 
     100% {
-        transform: scale(1.5) translateY(5px);
+        transform: scale(1.20);
     }
 }
 @keyframes profile-shrink {
     0% {
-        transform: scale(1.5) translateY(5px);
+        transform: scale(1.20);
     }
 
     100% {
