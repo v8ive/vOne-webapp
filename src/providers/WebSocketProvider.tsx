@@ -1,16 +1,17 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 import useWebSocket from 'react-use-websocket';
 import { WebSocketContext } from '../context/WebSocketContext';
 import useAuthStore from '../store/Auth';
+import { useNavigate } from 'react-router-dom';
 
 export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
     const { user } = useAuthStore();
+    const navigate = useNavigate();
     
     const {
         sendMessage,
         lastMessage,
         readyState,
-        getWebSocket
     } = useWebSocket(
         import.meta.env.VITE_WEBSOCKET_URL, {
         queryParams: user ? { user_id: user.user_id } : undefined,
@@ -25,6 +26,8 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
             const { action } = JSON.parse(event.data);
             if (action === 'pong') {
                 console.info('Pong received');
+            } else if (action === 'logged_in_elsewhere') {
+                navigate('/')
             } else {
                 console.info('Message received : ' + action);
             }
@@ -39,13 +42,6 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
             interval: 25000, // every 25 seconds, a ping message will be sent
         },
     });
-
-    useEffect(() => {
-        if (getWebSocket && !user) {
-            getWebSocket()?.close();
-        }
-    }, [user]);
-
 
     return (
         <WebSocketContext.Provider value={{ sendMessage, lastMessage, readyState }}>
