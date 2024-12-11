@@ -18,7 +18,6 @@ function InstallButton() {
         window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
         if (window.matchMedia('(display-mode: standalone)').matches ||
-            window.navigator.standalone ||
             document.referrer.startsWith('android-app://')) {
             setIsInstalled(true);
         }
@@ -35,7 +34,9 @@ function InstallButton() {
 
     const handleInstallClick = async () => {
         if (deferredPrompt) {
+            // @ts-expect-error - TS doesn't know about prompt()
             deferredPrompt.prompt();
+            // @ts-expect-error - TS doesn't know about userChoice
             const { outcome } = await deferredPrompt.userChoice;
             if (outcome === 'accepted') {
                 setDeferredPrompt(null);

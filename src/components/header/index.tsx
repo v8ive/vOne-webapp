@@ -63,8 +63,11 @@ function Header() {
                     zIndex: 1,
                 }}>
                     
-                    <InstallButton />
-
+                    <Box style={{
+                        marginTop: '2.5px',
+                    }}>
+                        <InstallButton />
+                    </Box>
                     {!isLoading ? (
                         user ? <Avatar
                             size={'2'}
