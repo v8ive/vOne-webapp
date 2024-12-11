@@ -1,5 +1,5 @@
 import { Box, Flex, Heading, Section } from "@radix-ui/themes";
-import UserList from "../../components/userList";
+import PresenceList from "../../components/presenceList";
 import "./index.css";
 
 function Chat() {
@@ -25,7 +25,7 @@ function Chat() {
                 </Flex>
 
                 <Flex align="center" justify="center">
-                    <UserList />
+                    <PresenceList />
                 </Flex>
             </Box>
         </>
