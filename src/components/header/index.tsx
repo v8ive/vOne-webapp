@@ -7,6 +7,7 @@ import HeaderSignInButton from './signInButton';
 import { useCustomTheme } from '../../context/CustomThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import './index.css';
+import InstallButton from '../ui/installButton';
 
 function Header() {
     const { user, isLoading } = useAuth();
@@ -31,22 +32,39 @@ function Header() {
                 boxShadow: `0 0 10px 0 ${mode === 'dark' ? 'var(--accent-10)' : 'var(--accent-12)'}`,
             }} />
             
-            <HeaderLogo />
 
             <Flex className="header-container">
 
-                <Dropdown />
+                <Box style={{
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    gap: '20px',
+                    flex: 1,
+                    zIndex: 1,
+                }}>
+                    <Dropdown />
 
-                <HeaderThemeToggle />
+                    <HeaderThemeToggle />
+                </Box>
+
+                <Box style={{
+                    marginTop: '5px',
+                }}>
+                    <HeaderLogo />
+                </Box>
 
                 {/* Profile Icon / Sign In Button / Skeleton */}
                 <Box style={{
                     display: 'flex',
                     justifyContent: 'flex-end',
+                    marginTop: '5px',
                     gap: '10px',
                     flex: 1,
                     zIndex: 1,
                 }}>
+                    
+                    <InstallButton />
+
                     {!isLoading ? (
                         user ? <Avatar
                             size={'2'}

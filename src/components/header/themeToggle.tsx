@@ -1,4 +1,4 @@
-import { Box, IconButton } from "@radix-ui/themes";
+import { IconButton } from "@radix-ui/themes";
 import { Moon, Sun } from "lucide-react";
 import { useCustomTheme } from "../../context/CustomThemeContext";
 import { supabase } from "../../utils/supabase";
@@ -27,16 +27,9 @@ function HeaderThemeToggle() {
     };
 
     return (
-        <Box
-            style={{
-                display: "flex",
-                justifyContent: "flex-start",
-                paddingLeft: "25px",
-                flex: 2,
-            }}
-        >
+        <>
             {mode === "dark" ? (
-                <IconButton variant="ghost" style={{ marginTop: "1px" }}>
+                <IconButton variant="ghost" style={{ alignSelf: 'center', marginTop: '0' }}>
                     <Sun
                         size={24}
                         className="theme-toggle"
@@ -44,7 +37,7 @@ function HeaderThemeToggle() {
                     />
                 </IconButton>
             ) : (
-                <IconButton variant="ghost" style={{ marginTop: "1px" }}>
+                    <IconButton variant="ghost" style={{ alignSelf: 'center', marginTop: "1px" }}>
                     <Moon
                         size={22}
                         className="theme-toggle"
@@ -52,7 +45,7 @@ function HeaderThemeToggle() {
                     />
                 </IconButton>
             )}
-        </Box>
+        </>
     );
 }
 
