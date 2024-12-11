@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import useAuthStore from '../../store/Auth';
+import { useAuth } from '../../context/AuthContext';
 import './index.css';
 
 function AuthForm() {
-    const { user, isLoading, error } = useAuthStore();
+    const { user, isLoading } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,7 +17,6 @@ function AuthForm() {
         <div className="auth-container">
             <h1>Welcome!</h1>
             {isLoading && <p>Loading...</p>}
-            {error && <p className="error-message">{error}</p>}
         </div>
     );
 }

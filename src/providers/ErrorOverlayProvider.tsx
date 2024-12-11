@@ -4,7 +4,6 @@ import { useWebSocketContext } from '../context/WebSocketContext';
 import { WebSocketError } from '../types/WebSocketError';
 import { Toaster, toast } from 'react-hot-toast';
 import { WebSocketPayload } from '../types/WebSocketPayload';
-import useAuthStore from '../store/Auth';
 
 interface ProviderParams {
     children: ReactNode;
@@ -13,7 +12,6 @@ interface ProviderParams {
 export const ErrorOverlayProvider = ({ children }: ProviderParams) => {
     const { lastMessage } = useWebSocketContext();
     const [error, setError] = useState<WebSocketError | null>(null);
-    const { signOut } = useAuthStore();
 
     useEffect(() => {
         if (lastMessage) {
@@ -27,7 +25,7 @@ export const ErrorOverlayProvider = ({ children }: ProviderParams) => {
     useEffect(() => {
         if (error) {
             if (error.type === 'logged_in_elsewhere') {
-                signOut();
+                return
             }
             toast.error(error.message);
             setError(null);

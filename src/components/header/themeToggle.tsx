@@ -1,18 +1,18 @@
 import { Box, IconButton } from '@radix-ui/themes';
 import { Moon, Sun } from "lucide-react";
-import useAuthStore from '../../store/Auth';
 import { useCustomTheme } from '../../context/CustomThemeContext';
 import { supabase } from '../../utils/supabase';
+import { useAuth } from '../../context/AuthContext';
 import './index.css';
 
 function HeaderThemeToggle() {
-    const { user } = useAuthStore();
+    const { user } = useAuth();
     const { mode, setMode } = useCustomTheme();
 
     const handleToggleThemeMode = async () => {
         if (mode === 'dark') {
             if (user) {
-                const { error } = await supabase.from('users').update({ theme_mode: 'light' }).eq('user_id', user.user_id);
+                const { error } = await supabase.from('users').update({ theme_mode: 'light' }).eq('user_id', user.id);
                 if (error) {
                     console.error('Error updating user theme mode:', error);
                     return;
@@ -21,7 +21,7 @@ function HeaderThemeToggle() {
             setMode('light');
         } else {
             if (user) {
-                const { error } = await supabase.from('users').update({ theme_mode: 'dark' }).eq('user_id', user.user_id);
+                const { error } = await supabase.from('users').update({ theme_mode: 'dark' }).eq('user_id', user.id);
                 if (error) {
                     console.error('Error updating user theme mode:', error);
                     return;
