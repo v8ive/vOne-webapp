@@ -55,8 +55,23 @@ const PresenceListItem: React.FC<PresenceListItemProps> = ({ presence }: { prese
                                     src={avatar_url && avatar_url !== '' ? avatar_url : undefined}
                                     size={"3"}
                                     radius='large'
-                                    fallback={username.includes(' ') ? `${username.split(' ')[0][0]}${username.split(' ')[1][0]}` : username.includes('-') ? `${username.split('-')[0][0]}${username.split('-')[1][0]}` : (username ? username.slice(0, 2) : 'XX')}
-                                    alt={username.includes(' ') ? `${username.split(' ')[0][0]}${username.split(' ')[1][0]}` : username.includes('-') ? `${username.split('-')[0][0]}${username.split('-')[1][0]}` : (username ? username.slice(0, 2) : 'XX')}
+                                    fallback={
+                                        username.includes(' ') ?
+                                            `${username.split(' ')[0][0]}${username.split(' ')[1][0]}`
+                                            : username.includes('-') ?
+                                                `${username.split('-')[0][0]}${username.split('-')[1][0]}`
+                                                : (username ? username.slice(0, 2) : 'XX')
+                                    }
+                                    alt={
+                                        username.includes(' ') ?
+                                            `${username.split(' ')[0][0]}${username.split(' ')[1][0]}`
+                                            : username.includes('-') ?
+                                                `${username.split('-')[0][0]}${username.split('-')[1][0]}`
+                                                : (username ?
+                                                    username.slice(0, 2)
+                                                    : 'XX'
+                                                )
+                                    }
                                 />
                                 <Box>
                                     <Text as={"div"} size="2" weight={"bold"}>

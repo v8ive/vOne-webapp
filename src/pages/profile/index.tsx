@@ -3,9 +3,11 @@ import { Avatar, Badge, Blockquote, Box, Flex, Heading, Skeleton } from '@radix-
 import { useAuth } from '../../context/AuthContext';
 import './index.css';
 import { useCustomTheme } from '../../context/CustomThemeContext';
+import { usePresence } from '../../context/PresenceContext';
 
 function UserProfile() {
     const { user, isLoading } = useAuth();
+    const { userPresence } = usePresence();
     const { mode } = useCustomTheme();
 
     const renderContent = () => {
@@ -32,7 +34,13 @@ function UserProfile() {
                                 src={user?.avatar_url && user?.avatar_url !== '' ? user.avatar_url : undefined}
                                 size={"9"}
                                 radius='large'
-                                fallback={user?.username?.includes(' ') ? `${user.username.split(' ')[0][0]}${user.username.split(' ')[1][0]}` : user?.username?.slice(0, 2) || 'NN'}
+                                fallback={
+                                    user?.username ?
+                                        user?.username?.includes(' ') ?
+                                            `${user.username.split(' ')[0][0]}${user.username.split(' ')[1][0]}`
+                                            : user?.username?.slice(0, 2)
+                                        : 'U'
+                                }
                                 alt={user?.username && user?.username.includes(' ') ? `${user.username.split(' ')[0][0]}${user.username.split(' ')[1][0]}` : user?.username?.slice(0, 2) || 'NN'}
                                 style={{
                                     border: '2px solid var(--accent-7)',
@@ -57,9 +65,9 @@ function UserProfile() {
                                 <Skeleton loading={isLoading}>
                                     <Badge 
                                         variant='surface'
-                                        color={user?.status === 'online' ? 'green' : (user?.status === 'away' ? 'amber' : 'gray')}
+                                        color={userPresence?.status === 'online' ? 'green' : (userPresence?.status === 'away' ? 'amber' : 'gray')}
                                         style={{ marginTop: '5px' }}>
-                                            {user?.status ?? 'online'}
+                                        {userPresence?.status ?? 'online'}
                                     </Badge>
                                 </Skeleton>
                                 <Skeleton loading={isLoading}>

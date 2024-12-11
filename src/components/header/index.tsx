@@ -53,7 +53,11 @@ function Header() {
                             radius={'full'}
                             src={user.avatar_url}
                             fallback={
-                                user.username?.includes(' ') ? `${user.username.split(' ')[0][0]}${user.username.split(' ')[1][0]}` : user.username?.slice(0, 2) || ''
+                                user.username ?
+                                    user.username?.includes(' ') ?
+                                        `${user.username.split(' ')[0][0]}${user.username.split(' ')[1][0]}` 
+                                        : user.username?.slice(0, 2) || ''
+                                    : 'U'
                             }
                             className='profile-icon'
                             style={{ cursor: 'pointer', marginTop: '5px' }}
