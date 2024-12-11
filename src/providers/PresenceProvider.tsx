@@ -42,19 +42,28 @@ export const PresenceProvider = ({ children }: ProviderParams) => {
                 .eq("user_id", user.id)
                 .single();
             if (error) {
-                console.error("Error fetching user presence:", error);
                 return null;
             } else {
                 return data;
             }
         };
 
-        fetchPresence().then((data) => {
+        fetchPresence().then(async (data) => {
             if (data) {
+                const now = new Date().getTime();
+                if (!data.status_locked) {
+                    await supabase
+                        .from("presence")
+                        .upsert({
+                            status: 'online',
+                            last_online: now,
+                        })
+                        .eq("user_id", user.id);
+                }
                 setUserPresence({
                     username: user.username,
-                    status: data.status,
-                    last_online: data.last_online,
+                    status: data.status_locked ? data.status : 'online',
+                    last_online: data.stat_locked ? data.last_online : now,
                     avatar_url: user.avatar_url,
                     user_id: user.id,
                 });
@@ -63,7 +72,6 @@ export const PresenceProvider = ({ children }: ProviderParams) => {
 
         const presenceListener = () => {
             const pList: Presence[] = [];
-            console.log("presenceListener", Object.values(publicPresenceChannel.presenceState()));
             Object.values(
                 publicPresenceChannel.presenceState()
             ).map((presence) => {
@@ -83,7 +91,6 @@ export const PresenceProvider = ({ children }: ProviderParams) => {
             e: RealtimePresenceJoinPayload<{ [key: string]: unknown }>
         ) => {
             const pList: Presence[] = [];
-            console.log("joinListener", e);
             Object.values(e.newPresences).map((presence) => {
                 pList.push(presence as unknown as Presence);
             });
@@ -112,7 +119,6 @@ export const PresenceProvider = ({ children }: ProviderParams) => {
             .on("presence", { event: "leave" }, (e) => leaveListener(e))
             .subscribe(async (status) => {
                 if (status !== "SUBSCRIBED") {
-                    console.log("Error subscribing to presence channel", status);
                     setChannel(null);
                     setConnected(false);
                     return;
@@ -121,7 +127,6 @@ export const PresenceProvider = ({ children }: ProviderParams) => {
                 if (userPresence) {
                     const presenceTrackStatus =
                         await publicPresenceChannel.track(userPresence);
-                    console.log("presenceTrackStatus", presenceTrackStatus);
                     if (presenceTrackStatus === "ok") {
                         setConnected(true);
                     }
@@ -136,10 +141,9 @@ export const PresenceProvider = ({ children }: ProviderParams) => {
     }, [user, isLoading]);
 
     useEffect(() => {
-        if (!user || !userPresence || !channel || isLoading) {
+        if (!user || !userPresence || !channel) {
             return;
         }
-        console.log("Setting user presence", userPresence);
 
         const setStatus = async () => {
             const { error } = await supabase
@@ -153,15 +157,11 @@ export const PresenceProvider = ({ children }: ProviderParams) => {
                 console.error("Error setting user presence:", error);
                 return;
             }
-            const response = await channel.send({
-                type: "presence",
-                event: "sync",
-            });
-            console.log("response", response);
+            await channel.track(userPresence);
         };
 
         setStatus();
-    }, [userPresence, channel, user, isLoading]);
+    }, [userPresence]);
 
     return (
         <PresenceContext.Provider
