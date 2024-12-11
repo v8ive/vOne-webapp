@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }: ProviderParams) => {
         };
     };
 
-    if (user && session && isLoading) {
+    if (isLoading) {
         setIsLoading(false)
     }
 

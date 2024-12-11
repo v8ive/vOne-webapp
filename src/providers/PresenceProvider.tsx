@@ -23,13 +23,17 @@ export const PresenceProvider = ({ children }: ProviderParams) => {
 
     useEffect(() => {
         if (!user || isLoading) {
+            if (!user && !isLoading) {
+                setPresences([]);
+                setConnected(false);
+            }
             return;
         }
         const publicPresenceChannel = supabase.channel("public:presence", {
             config: {
-                private: false,
+                private: true,
                 presence: {
-                    key: "presence_channel",
+                    key: user.id,
                 },
             },
         });
