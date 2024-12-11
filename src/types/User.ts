@@ -1,13 +1,10 @@
-import { User as supaUser } from "@supabase/supabase-js";
-import { ThemeMode, ThemeName } from "./Theme";
 
-export interface User extends supaUser {
+export interface dbUser {
+    id: string;
     username: string;
-    email: string;
-    profile_picture: string;
-    discord_id: string;
-    user_id: string;
-    status: string;
-    theme_name: ThemeName;
-    theme_mode: ThemeMode;
+    bio: string;
+    avatar_url: string;
+    created_at: string;
 }
+
+export type Status = 'online' | 'offline' | 'away';

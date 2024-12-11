@@ -4,11 +4,6 @@ import { extractDiscordIdFromAvatarUrl } from '../utils/discord';
 import { User } from '../types/User';
 
 
-export const supabase = createClient(
-    import.meta.env.VITE_SUPABASE_URL!,
-    import.meta.env.VITE_SUPABASE_ANON_KEY!
-);
-
 interface UserState {
     user: User | null;
     isLoading: boolean;

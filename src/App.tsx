@@ -5,16 +5,15 @@ import Header from './components/header';
 import HomePage from "./pages/home"
 import SignInPage from "./pages/signin"
 import ProfilePage from "./pages/profile"
-import useAuthStore from "./store/Auth";
 
-import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
 
-import './App.css';
 import { useCustomTheme } from "./context/CustomThemeContext";
 
+import "@radix-ui/themes/styles.css";
+import './App.css';
+
 function App() {
-    const { initialize } = useAuthStore();
     const { mode, themeName } = useCustomTheme();
 
     useEffect(() => {
@@ -36,10 +35,6 @@ function App() {
         }
     }, []);
 
-    useEffect(() => {
-        initialize();
-    }, []);
-
     return (
         <Theme
             hasBackground
@@ -48,6 +43,7 @@ function App() {
             panelBackground='translucent'
         >
             <Header />
+
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/signin" element={<SignInPage />} />

@@ -1,14 +1,14 @@
 import { Button } from '@radix-ui/themes';
 import { DiscordLogoIcon } from '@radix-ui/react-icons';
-import useAuthStore from '../../store/Auth';
+import { useAuth } from '../../context/AuthContext';
 import './index.css';
 
 function HeaderSignInButton() {
-    const { signInWithDiscord } = useAuthStore();
+    const { signIn } = useAuth();
 
     return (
         <Button name='sign in' variant='ghost'
-            onClick={signInWithDiscord}
+            onClick={signIn}
             style={{
                 cursor: 'pointer',
                 marginRight: '10px',

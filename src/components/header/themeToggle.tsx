@@ -2,7 +2,7 @@ import { Box, IconButton } from '@radix-ui/themes';
 import { Moon, Sun } from "lucide-react";
 import useAuthStore from '../../store/Auth';
 import { useCustomTheme } from '../../context/CustomThemeContext';
-import { supabase } from '../../store/Auth';
+import { supabase } from '../../utils/supabase';
 import './index.css';
 
 function HeaderThemeToggle() {

@@ -1,16 +1,23 @@
 import { Avatar, Box, Card, Flex, HoverCard, Text } from '@radix-ui/themes';
-import { UserStatePayload } from '../../types/UserStatePayload';
 import { useCustomTheme } from '../../context/CustomThemeContext';
+import { Presence } from '../../types/Presence';
 
-interface UserListItemProps {
-    user: UserStatePayload;
+interface PresenceListItemProps {
+    presence: Presence;
 }
 
-const UserListItem: React.FC<UserListItemProps> = ({ user }) => {
+const PresenceListItem: React.FC<PresenceListItemProps> = ({ presence }: { presence: Presence}) => {
     const { mode } = useCustomTheme();
-    const { username, status, last_online, profile_picture } = user.user_state;
+    let { username, status, last_online, avatar_url } = presence;
     const statusColor = status === 'online' ? 'green' : status === 'offline' ? 'gray' : 'yellow';
 
+    if (!username) {
+        username = presence.name ?? 'Unknown';
+        status = 'away';
+        last_online = new Date().getTime();
+        avatar_url = '';
+    }
+        
     const getTimeSince = (timestamp: number) => {
         const now = Date.now();
         const seconds = Math.floor((now - timestamp) / 1000);
@@ -45,11 +52,11 @@ const UserListItem: React.FC<UserListItemProps> = ({ user }) => {
                         }}>
                             <Flex gap={"2"} align={"center"}>
                                 <Avatar
-                                    src={profile_picture && profile_picture !== '' ? profile_picture : undefined}
+                                    src={avatar_url && avatar_url !== '' ? avatar_url : undefined}
                                     size={"3"}
                                     radius='large'
-                                    fallback={username.includes(' ') ? `${username.split(' ')[0][0]}${username.split(' ')[1][0]}` : username.includes('-') ? `${username.split('-')[0][0]}${username.split('-')[1][0]}` : username.slice(0, 2)}
-                                    alt={username.includes(' ') ? `${username.split(' ')[0][0]}${username.split(' ')[1][0]}` : username.includes('-') ? `${username.split('-')[0][0]}${username.split('-')[1][0]}` : username.slice(0, 2)}
+                                    fallback={username.includes(' ') ? `${username.split(' ')[0][0]}${username.split(' ')[1][0]}` : username.includes('-') ? `${username.split('-')[0][0]}${username.split('-')[1][0]}` : (username ? username.slice(0, 2) : 'XX')}
+                                    alt={username.includes(' ') ? `${username.split(' ')[0][0]}${username.split(' ')[1][0]}` : username.includes('-') ? `${username.split('-')[0][0]}${username.split('-')[1][0]}` : (username ? username.slice(0, 2) : 'XX')}
                                 />
                                 <Box>
                                     <Text as={"div"} size="2" weight={"bold"}>
@@ -76,4 +83,4 @@ const UserListItem: React.FC<UserListItemProps> = ({ user }) => {
     );
 };
 
-export default UserListItem;
+export default PresenceListItem;

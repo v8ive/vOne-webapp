@@ -1,6 +1,6 @@
-import { Box, Flex, Heading, Section } from "@radix-ui/themes";
-import UserList from "../../components/userList";
+import { Box, Heading, Section } from "@radix-ui/themes";
 import "./index.css";
+import PresenceList from "../../components/presenceList";
 
 function Home() {
 
@@ -20,13 +20,7 @@ function Home() {
                     <Heading size={"9"}>v8ive.one</Heading>
                 </Section>
 
-                <Flex align="center" justify="center" className="">
-                    <Heading size={"4"}>Users</Heading>
-                </Flex>
-
-                <Flex align="center" justify="center">
-                    <UserList />
-                </Flex>
+                <PresenceList />
             </Box>
         </>
     );

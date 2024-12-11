@@ -1,15 +1,15 @@
-import { Avatar, Box, Flex, Section } from '@radix-ui/themes';
-import useAuthStore from '../../store/Auth';
+import { Avatar, Box, Flex, Section, Skeleton } from '@radix-ui/themes';
 import Dropdown from './dropdrown';
 import { useNavigate } from 'react-router-dom';
 import HeaderLogo from './logo';
 import HeaderThemeToggle from './themeToggle';
 import HeaderSignInButton from './signInButton';
-import './index.css';
 import { useCustomTheme } from '../../context/CustomThemeContext';
+import { useAuth } from '../../context/AuthContext';
+import './index.css';
 
 function Header() {
-    const { user, isLoading } = useAuthStore();
+    const { user, isLoading } = useAuth();
     const { mode } = useCustomTheme();
     const navigate = useNavigate();
 
@@ -39,7 +39,7 @@ function Header() {
 
                 <HeaderThemeToggle />
 
-                {/* Profile Icon / Sign In Button */}
+                {/* Profile Icon / Sign In Button / Skeleton */}
                 <Box style={{
                     display: 'flex',
                     justifyContent: 'flex-end',
@@ -47,25 +47,32 @@ function Header() {
                     flex: 1,
                     zIndex: 1,
                 }}>
-                    {!user && (
-                        isLoading ?
-                            <>
-                            </> :
-                            <HeaderSignInButton />
-                    )}
-                    {user && (
-                        <Avatar
+                    {!isLoading ? (
+                        user ? <Avatar
                             size={'2'}
                             radius={'full'}
-                            src={user.profile_picture}
+                            src={user.avatar_url}
                             fallback={
-                                user.username.includes(' ') ? `${user.username.split(' ')[0][0]}${user.username.split(' ')[1][0]}` : user.username.slice(0, 2)
+                                user.username?.includes(' ') ? `${user.username.split(' ')[0][0]}${user.username.split(' ')[1][0]}` : user.username?.slice(0, 2) || ''
                             }
                             className='profile-icon'
                             style={{ cursor: 'pointer', marginTop: '5px' }}
                             onClick={() => navigate('/profile')}
                         />
-                    )}
+                        : <HeaderSignInButton />
+                    ) : (
+                        <Skeleton
+                            className='profile-icon'
+                            style={{
+                                width: '30px',
+                                height: '30px',
+                                borderRadius: '50%',
+                                marginTop: '5px',
+                            }}
+                        />
+                    )
+                    }
+                    
                 </Box>
             </Flex>
         </Section>

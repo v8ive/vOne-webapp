@@ -6,23 +6,29 @@ import { WebSocketProvider } from './providers/WebSocketProvider.tsx'
 import { UsersProvider } from './providers/UsersProvider.tsx'
 import { ThemeProvider } from 'next-themes'
 import { BrowserRouter } from 'react-router-dom'
+import { AuthProvider } from './providers/AuthProvider.tsx'
+import { PresenceProvider } from './providers/PresenceProvider.tsx'
 import App from './App.tsx'
 import './index.css'
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <BrowserRouter>
-            <WebSocketProvider>
-                <ErrorOverlayProvider>
+            <AuthProvider>
+                <WebSocketProvider>
                     <UsersProvider>
-                        <ThemeProvider>
-                            <CustomThemeProvider>
-                                <App />
-                            </CustomThemeProvider>
-                        </ThemeProvider>
+                        <PresenceProvider>
+                            <ThemeProvider>
+                                <CustomThemeProvider>
+                                    <ErrorOverlayProvider>
+                                        <App />
+                                    </ErrorOverlayProvider>
+                                </CustomThemeProvider>
+                            </ThemeProvider>
+                        </PresenceProvider>
                     </UsersProvider>
-                </ErrorOverlayProvider>
-            </WebSocketProvider>
+                </WebSocketProvider>
+            </AuthProvider>
         </BrowserRouter>
     </StrictMode>
 )

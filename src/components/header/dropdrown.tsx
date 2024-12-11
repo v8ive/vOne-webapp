@@ -1,21 +1,34 @@
 import { useNavigate } from 'react-router-dom';
-import useAuthStore from '../../store/Auth';
 import { AlertDialog, Box, Button, DropdownMenu, Flex, IconButton } from '@radix-ui/themes';
 import { DiscordLogoIcon } from '@radix-ui/react-icons';
 import { EllipsisVertical } from 'lucide-react';
 import { ThemeName, ThemeNames } from '../../types/Theme';
 import { useCustomTheme } from '../../context/CustomThemeContext';
-import { supabase } from '../../store/Auth';
+import { supabase } from '../../utils/supabase';
+import { useAuth } from '../../context/AuthContext';
+import { DropdownMenuItemIndicator } from '@radix-ui/react-dropdown-menu';
+import { usePresence } from '../../context/PresenceContext';
+import { Status } from '../../types/User';
 import './dropdown.css';
 
 function Dropdown() {
     const navigate = useNavigate();
-    const { user, signInWithDiscord, signOut } = useAuthStore();
+    const { user, signIn, signOut } = useAuth();
     const { setThemeName } = useCustomTheme();
+    const { userPresence, setUserPresence } = usePresence();
+
+    const handlePresenceChange = async (newStatus: Status) => {
+        if (!user || !userPresence) return;
+        
+        setUserPresence({
+            ...userPresence,
+            status: newStatus,
+        });
+    };
 
     const handleThemeChange = async (theme_name: ThemeName) => {
         if (!user) return;
-        const { error } = await supabase.from('users').update({ theme_name }).eq('user_id', user.user_id);
+        const { error } = await supabase.from('theme').update({ theme_name }).eq('user_id', user.id);
         if (error) {
             console.error('Error updating user theme:', error);
             return;
@@ -42,8 +55,6 @@ function Dropdown() {
                         Home
                     </DropdownMenu.Item>
 
-                    <DropdownMenu.Separator />
-
                     {user ? (
                         <>
                             <DropdownMenu.Item
@@ -51,6 +62,8 @@ function Dropdown() {
                             >
                                 Profile
                             </DropdownMenu.Item>
+
+                            <DropdownMenu.Separator />
 
                             <DropdownMenu.Sub>
                                 <DropdownMenu.SubTrigger>
@@ -70,6 +83,21 @@ function Dropdown() {
 
                             </DropdownMenu.Sub>
 
+                            <DropdownMenu.Item>
+                                <DropdownMenu.CheckboxItem
+                                    checked={userPresence?.status === 'offline'}
+                                    onCheckedChange={(checked) => handlePresenceChange(
+                                        checked ? 'offline' : 'online'
+                                    )}>
+                                    Appear Offline
+                                    <DropdownMenuItemIndicator>
+                                        <DiscordLogoIcon />
+                                    </DropdownMenuItemIndicator>
+                                </DropdownMenu.CheckboxItem>
+                            </DropdownMenu.Item>
+
+                            <DropdownMenu.Separator />
+
                             <AlertDialog.Root>
 
                                 <AlertDialog.Trigger>
@@ -87,7 +115,7 @@ function Dropdown() {
                                     </AlertDialog.Description>
 
                                     <Flex gap="3" mt="4" justify="end">
-                                        
+
                                         <AlertDialog.Cancel>
                                             <Button name='cancel' variant="soft" color="gray">
                                                 Cancel
@@ -107,7 +135,7 @@ function Dropdown() {
                             </AlertDialog.Root>
                         </>
                     ) : (
-                        <DropdownMenu.Item onSelect={signInWithDiscord}>
+                        <DropdownMenu.Item onSelect={signIn}>
                             Sign In
                             <DiscordLogoIcon />
                         </DropdownMenu.Item>

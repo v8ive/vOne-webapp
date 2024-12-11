@@ -1,21 +1,19 @@
 import { useEffect, useState } from 'react';
-import UserListItem from '../userListItem';
-import { useUsersContext } from '../../context/UsersContext';
+import PresenceListItem from './presenceListItem';
 import { Box, Flex, Spinner } from '@radix-ui/themes';
-import { useWebSocketContext } from '../../context/WebSocketContext';
+import { usePresence } from '../../context/PresenceContext';
 
-const UserList: React.FC = () => {
-    const { users } = useUsersContext();
-    const { lastMessage } = useWebSocketContext();
+const PresenceList: React.FC = () => {
+    const { presences } = usePresence();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (loading) {
-            if (Object.keys(users).length > 0) {
+            if (Object.keys(presences).length > 0) {
                 setLoading(false);
             }
         }
-    }, [lastMessage, users, loading]);
+    }, [presences, loading]);
 
     if (loading) {
         return (
@@ -27,11 +25,11 @@ const UserList: React.FC = () => {
 
     return (
             <Box style={{ display: 'flex', flexDirection: 'column', gap: '5px', padding: '10px' }}>
-                {Object.entries(users).map(([userId, user]) => (
-                    <UserListItem key={userId} user={user} />
+            {Object.entries(presences).map(([presenceId, presence]) => (
+                    <PresenceListItem key={presenceId} presence={presence} />
                 ))}
             </Box>
     );
 };
 
-export default UserList;
+export default PresenceList;
