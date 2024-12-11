@@ -13,8 +13,14 @@ const PresenceListItem: React.FC<PresenceListItemProps> = ({ presence }: { prese
 
     if (!username) {
         username = presence.name ?? 'Unknown';
+    }
+    if (!status) {
         status = 'away';
+    }
+    if (!last_online) {
         last_online = new Date().getTime();
+    }
+    if (!avatar_url) {
         avatar_url = '';
     }
         

@@ -23,22 +23,23 @@ export const PresenceProvider = ({ children }: ProviderParams) => {
 
     useEffect(() => {
         if (!user || isLoading) {
-            if (!user && !isLoading) {
-                setPresences([]);
-                setConnected(false);
-            }
+            // Clear presences and set userPresence to a default offline state when user is not logged in
+            setPresences([]);
+            setConnected(false);
             return;
         }
+
         const publicPresenceChannel = supabase.channel("public:presence", {
             config: {
-                private: true,
+                private: user ? true : false,
                 presence: {
                     key: user.id,
                 },
             },
         });
-        setChannel(publicPresenceChannel); // Initialize channel here
+        setChannel(publicPresenceChannel);
 
+        // Fetch initial presence data for the user
         const fetchPresence = async () => {
             const { data, error } = await supabase
                 .from("presence")
@@ -55,92 +56,95 @@ export const PresenceProvider = ({ children }: ProviderParams) => {
         fetchPresence().then(async (data) => {
             if (data) {
                 const now = new Date().getTime();
+                // Update presence status to 'online' if not locked
                 if (!data.status_locked) {
                     await supabase
                         .from("presence")
                         .upsert({
-                            status: 'online',
+                            status: "online",
                             last_online: now,
                         })
                         .eq("user_id", user.id);
                 }
+                // Set user presence with fetched or updated data
                 setUserPresence({
                     username: user.username,
-                    status: data.status_locked ? data.status : 'online',
-                    last_online: data.stat_locked ? data.last_online : now,
+                    status: data.status_locked ? data.status : "online",
+                    last_online: data.status_locked
+                        ? data.last_online
+                        : now,
                     avatar_url: user.avatar_url,
                     user_id: user.id,
                 });
             }
         });
 
-        const presenceListener = () => {
-            const pList: Presence[] = [];
-            Object.values(
-                publicPresenceChannel.presenceState()
-            ).map((presence) => {
-                // if the user is not already in the list, add them
-                if (
-                    pList
-                        .map((p) => p.user_id)
-                        .indexOf((presence[0] as Presence).user_id) === -1
-                ) {
-                    pList.push(presence[0] as Presence);
+        // Helper function to update presence list with new presence data
+        const updatePresenceList = (newPresence: Presence) => {
+            setPresences((prevPresences) => {
+                // Check if presence with the same user_id already exists
+                const existingPresenceIndex = prevPresences.findIndex(
+                    (p) => p.user_id === newPresence.user_id
+                );
+                if (existingPresenceIndex > -1) {
+                    // Update existing presence
+                    const updatedPresences = [...prevPresences];
+                    updatedPresences[existingPresenceIndex] = newPresence;
+                    return updatedPresences;
+                } else {
+                    // Add new presence
+                    return [...prevPresences, newPresence];
                 }
             });
-            setPresences(pList);
+        };
+
+        const presenceListener = () => {
+            const presenceState = publicPresenceChannel.presenceState();
+            Object.values(presenceState).forEach((presence) => {
+                updatePresenceList(presence[0] as Presence);
+            });
         };
 
         const joinListener = (
             e: RealtimePresenceJoinPayload<{ [key: string]: unknown }>
         ) => {
-            const pList: Presence[] = [];
-            Object.values(e.newPresences).map((presence) => {
-                pList.push(presence as unknown as Presence);
+            Object.values(e.newPresences).forEach((presence) => {
+                updatePresenceList(presence as unknown as Presence);
             });
-            setPresences(pList);
         };
 
         const leaveListener = (
             e: RealtimePresenceLeavePayload<{ [key: string]: unknown }>
         ) => {
-            const pList: Presence[] = [];
-            Object.values(e.leftPresences).map((presence) => {
-                if (
-                    pList
-                        .map((p) => p.user_id)
-                        .indexOf(presence.user_id as string) === -1
-                ) {
-                    pList.push(presence as unknown as Presence);
-                }
+            Object.values(e.leftPresences).forEach((presence) => {
+                setPresences((prevPresences) =>
+                    prevPresences.filter((p) => p.user_id !== presence.user_id)
+                );
             });
-            setPresences(pList);
         };
 
+        // Subscribe to presence events and track user's presence
         publicPresenceChannel
             .on("presence", { event: "sync" }, presenceListener)
             .on("presence", { event: "join" }, (e) => joinListener(e))
             .on("presence", { event: "leave" }, (e) => leaveListener(e))
             .subscribe(async (status) => {
-                if (status !== "SUBSCRIBED") {
-                    setChannel(null);
-                    setConnected(false);
-                    return;
-                }
-
-                if (userPresence) {
+                if (status === "SUBSCRIBED" && userPresence) {
                     const presenceTrackStatus =
                         await publicPresenceChannel.track(userPresence);
                     if (presenceTrackStatus === "ok") {
                         setConnected(true);
                     }
+                } else {
+                    setChannel(null);
+                    setConnected(false);
                 }
             });
 
         return () => {
             publicPresenceChannel.unsubscribe();
             setConnected(false);
-            setChannel(null); // Reset channel on unmount
+            setChannel(null);
         };
     }, [user, isLoading]);
 
@@ -165,7 +169,7 @@ export const PresenceProvider = ({ children }: ProviderParams) => {
         };
 
         setStatus();
-    }, [userPresence]);
+    }, [userPresence, channel, user]);
 
     return (
         <PresenceContext.Provider

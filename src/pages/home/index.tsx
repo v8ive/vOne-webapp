@@ -20,7 +20,7 @@ function Home() {
                     <Heading size={"9"}>v8ive.one</Heading>
                 </Section>
 
-                <PresenceList />
+                <PresenceList showOffline={true} />
             </Box>
         </>
     );
