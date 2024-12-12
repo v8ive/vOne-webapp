@@ -11,23 +11,18 @@ interface ProviderParams {
 
 export const AuthProvider = ({ children }: ProviderParams) => {
     const [user, setUser] = useState<User | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState(true); // Initialize in loading state
     const navigate = useNavigate();
 
-    console.log("User:", user);
-
     useEffect(() => {
-        // Check for existing session on mount
-        const checkSession = async () => {
-            const { data, error } = await supabase.auth.getSession();
+        supabase.auth.getSession().then(async ({ data, error }) => {
             if (data?.session) {
                 await fetchUser(data.session.user.id, data.session);
             } else if (error) {
                 console.error("Error fetching session:", error);
             }
-            setIsLoading(false); // Set isLoading to false after checking
-        };
-        checkSession();
+            setIsLoading(false);
+        });
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             async (event, session) => {
@@ -40,26 +35,20 @@ export const AuthProvider = ({ children }: ProviderParams) => {
             }
         );
 
-        return () => {
-            subscription.unsubscribe();
-        };
+        return () => subscription.unsubscribe();
     }, []);
 
     const fetchUser = async (id: string, session: Session) => {
-        console.log("Fetching user...");
         try {
-            const user = await (new User(
+            const user = await new User(
                 id,
                 session.user?.user_metadata?.full_name as string,
                 session.user?.user_metadata?.avatar_url as string
-            )).fetch();
-            if (user) {
-                setUser(user);
-            }
+            ).fetch();
+            setUser(user);
         } catch (error) {
             console.error("Error fetching user:", error);
         } finally {
-            console.log("Finished fetching user.");
             setIsLoading(false);
         }
     };
