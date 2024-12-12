@@ -15,6 +15,22 @@ export const AuthProvider = ({ children }: ProviderParams) => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        const checkStorage = async () => {
+            if (localStorage.getItem('sb-batsqueiouxbwiweakyn-auth-token')) {
+                setIsLoading(true);
+                const { data, error } = await supabase.auth.getSession();
+                if (data && data.session) {
+                    await fetchUser(data.session.user.id, data.session);
+                } else if (error) {
+                    console.error("Error fetching session:", error);
+                    setIsLoading(false);
+                } else {
+                    setIsLoading(false);
+                }
+            }
+        }
+        checkStorage();
+
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             async (event, session) => {
                 if (event === "SIGNED_OUT") {
