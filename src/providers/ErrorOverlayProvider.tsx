@@ -1,26 +1,26 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { ErrorOverlayContext } from '../context/ErrorOverlayContext';
-import { useWebSocketContext } from '../context/WebSocketContext';
+// import { useWebSocketContext } from '../context/WebSocketContext';
 import { WebSocketError } from '../types/WebSocketError';
 import { Toaster, toast } from 'react-hot-toast';
-import { WebSocketPayload } from '../types/WebSocketPayload';
+// import { WebSocketPayload } from '../types/WebSocketPayload';
 
 interface ProviderParams {
     children: ReactNode;
 }
 
 export const ErrorOverlayProvider = ({ children }: ProviderParams) => {
-    const { lastMessage } = useWebSocketContext();
+    // const { lastMessage } = useWebSocketContext();
     const [error, setError] = useState<WebSocketError | null>(null);
 
-    useEffect(() => {
-        if (lastMessage) {
-            const { action, data } = JSON.parse(lastMessage.data) as WebSocketPayload;
-            if (action === 'error') {
-                setError(data as WebSocketError);
-            }
-        }
-    }, [lastMessage]);
+    // useEffect(() => {
+    //     if (lastMessage) {
+    //         const { action, data } = JSON.parse(lastMessage.data) as WebSocketPayload;
+    //         if (action === 'error') {
+    //             setError(data as WebSocketError);
+    //         }
+    //     }
+    // }, [lastMessage]);
 
     useEffect(() => {
         if (error) {
