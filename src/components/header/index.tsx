@@ -1,4 +1,4 @@
-import { Avatar, Box, Flex, Section, Skeleton } from '@radix-ui/themes';
+import { Avatar, Box, Flex, Section } from '@radix-ui/themes';
 import Dropdown from './dropdrown';
 import { useNavigate } from 'react-router-dom';
 import HeaderLogo from './logo';
@@ -10,7 +10,7 @@ import './index.css';
 import InstallButton from '../ui/installButton';
 
 function Header() {
-    const { user, isLoading } = useAuth();
+    const { user } = useAuth();
     const { mode } = useCustomTheme();
     const navigate = useNavigate();
 
@@ -68,8 +68,7 @@ function Header() {
                     }}>
                         <InstallButton />
                     </Box>
-                    {!isLoading ? (
-                        user ? <Avatar
+                    {user ? <Avatar
                             size={'2'}
                             radius={'full'}
                             src={user.avatar_url}
@@ -85,17 +84,6 @@ function Header() {
                             onClick={() => navigate('/profile')}
                         />
                         : <HeaderSignInButton />
-                    ) : (
-                        <Skeleton
-                            className='profile-icon'
-                            style={{
-                                width: '30px',
-                                height: '30px',
-                                borderRadius: '50%',
-                                marginTop: '5px',
-                            }}
-                        />
-                    )
                     }
                     
                 </Box>

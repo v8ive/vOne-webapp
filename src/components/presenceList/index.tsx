@@ -12,7 +12,7 @@ type PresenceListProps = {
 
 const PresenceList: React.FC<PresenceListProps> = ({ showOffline = false }) => {
     const { presences } = usePresence();
-    const { user, isLoading } = useAuth();
+    const { user } = useAuth();
     const [presenceList, setPresenceList] = useState<Presence[]>([]);
 
     useEffect(() => {
@@ -68,7 +68,7 @@ const PresenceList: React.FC<PresenceListProps> = ({ showOffline = false }) => {
         fetchPresences();
     }, [presences, showOffline, user]);
 
-    if (isLoading) {
+    if (!user) {
         return (
             <Flex
                 align="center"
