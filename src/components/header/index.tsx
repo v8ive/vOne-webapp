@@ -81,7 +81,7 @@ function Header() {
                                     : 'U'
                             }
                             className='profile-icon'
-                            style={{ cursor: 'pointer', marginTop: '5px' }}
+                            style={{ cursor: 'pointer', marginTop: '1px' }}
                             onClick={() => navigate('/profile')}
                         />
                         : <HeaderSignInButton />

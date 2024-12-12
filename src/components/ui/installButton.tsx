@@ -1,4 +1,5 @@
 import { Button } from '@radix-ui/themes';
+import { DownloadIcon } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 function InstallButton() {
@@ -12,6 +13,7 @@ function InstallButton() {
         });
 
         const handleBeforeInstallPrompt = (e: Event) => {
+            console.log('beforeinstallprompt fired');
             e.preventDefault();
             setDeferredPrompt(e);
         }
@@ -44,12 +46,12 @@ function InstallButton() {
         }
     };
 
-    if (isInstalled) {
+    if (isInstalled || !deferredPrompt) {
         return null; // Don't show the button if it was already installed
     } else {
         return (
-            <Button onClick={handleInstallClick} disabled={!deferredPrompt}>
-                Install App
+            <Button variant={'soft'} onClick={handleInstallClick} disabled={!deferredPrompt} style={{ cursor: deferredPrompt ? 'pointer' : 'default' }}>
+                <DownloadIcon />
             </Button>
         );
     }

@@ -11,7 +11,9 @@ function HeaderSignInButton() {
             onClick={signIn}
             style={{
                 cursor: 'pointer',
-                marginRight: '10px',
+                marginRight: '5px',
+                marginLeft: '5px',
+                alignSelf: 'center',
             }}
         >
             Sign In
