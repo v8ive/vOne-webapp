@@ -14,7 +14,7 @@ export class User {
     }
 
     public async fetch() {
-        let { data, error } = await supabase.from('users').select('*').eq('id', this.id).single();
+        const { data, error } = await supabase.from('users').select('*').eq('id', this.id).single();
         if (error) {
             console.error('Error fetching user:', error);
             return null;
@@ -27,13 +27,13 @@ export class User {
                 this.created_at = data.created_at;
             } else {
                 console.log('User not found, creating user...');
-                ({ data, error } = await supabase.from('users').insert([{
+                const { error } = await supabase.from('users').insert([{
                     id: this.id,
                     username: this.username,
                     bio: this.bio,
                     avatar_url: this.avatar_url,
                     created_at: new Date().getTime(),
-                }]).single());
+                }]);
                 if (error) {
                     console.error('Error creating user:', error);
                     return null;
