@@ -32,9 +32,6 @@ export const PresenceProvider = ({ children }: ProviderParams) => {
         const publicPresenceChannel = supabase.channel("public:presence", {
             config: {
                 private: user ? true : false,
-                presence: {
-                    key: user.id,
-                },
             },
         });
         setChannel(publicPresenceChannel);
