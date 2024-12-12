@@ -11,7 +11,7 @@ interface ProviderParams {
 
 export const AuthProvider = ({ children }: ProviderParams) => {
     const [user, setUser] = useState<User | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const navigate = useNavigate();
 
     useEffect(() => {
