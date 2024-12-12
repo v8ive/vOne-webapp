@@ -20,11 +20,13 @@ export class User {
             return null;
         } else {
             if (data) {
+                console.log('User Data fetched:', data);
                 this.username = data.username;
                 this.bio = data.bio;
                 this.avatar_url = data.avatar_url;
                 this.created_at = data.created_at;
             } else {
+                console.log('User not found, creating user...');
                 ({ data, error } = await supabase.from('users').insert([{
                     id: this.id,
                     username: this.username,
@@ -37,6 +39,7 @@ export class User {
                     return null;
                 }
             }
+            console.log('User fetched:', this);
 
         }
         return this;

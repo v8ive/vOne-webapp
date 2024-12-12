@@ -53,7 +53,6 @@ export const AuthProvider = ({ children }: ProviderParams) => {
                 session.user?.user_metadata?.full_name as string,
                 session.user?.user_metadata?.avatar_url as string
             )).fetch();
-            console.log("User fetched:", user);
             setUser(user);
         } catch (error) {
             console.error("Error fetching user:", error);
