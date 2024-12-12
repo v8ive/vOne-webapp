@@ -21,20 +21,11 @@ export const AuthProvider = ({ children }: ProviderParams) => {
                     setUser(null);
                     setIsLoading(false);
                     navigate("/");
-                } else if (event === "SIGNED_IN") {
-                    if (session) {
-                        await fetchUser(session.user.id, session);
-                    }
-                    setIsLoading(false);
-                } else if (event === "INITIAL_SESSION") {
-                    if (session) {
-                        await fetchUser(session?.user.id as string, session);
-                    }
-                    setIsLoading(false);
                 } else if (session) {
+                    // Fetch user data when a session is available (SIGNED_IN or INITIAL_SESSION)
                     await fetchUser(session.user.id, session);
-                    setIsLoading(false);
                 }
+
                 console.log("Auth Event:", event, session);
             }
         );
@@ -45,13 +36,18 @@ export const AuthProvider = ({ children }: ProviderParams) => {
     }, []);
 
     const fetchUser = async (id: string, session: Session) => {
-        await new User(id,
-            session.user?.user_metadata?.full_name as string,
-            session.user?.user_metadata?.avatar_url as string,
-        ).fetch().then((user) => {
+        try {
+            const user = await new User(
+                id,
+                session.user?.user_metadata?.full_name as string,
+                session.user?.user_metadata?.avatar_url as string
+            ).fetch();
             setUser(user);
-            return user;
-        });
+        } catch (error) {
+            console.error("Error fetching user:", error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const signIn = async () => {
