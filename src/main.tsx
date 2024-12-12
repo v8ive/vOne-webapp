@@ -2,8 +2,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { CustomThemeProvider } from './providers/CustomThemeProvider.tsx'
 import { ErrorOverlayProvider } from './providers/ErrorOverlayProvider.tsx'
-import { WebSocketProvider } from './providers/WebSocketProvider.tsx'
-import { UsersProvider } from './providers/UsersProvider.tsx'
+// import { WebSocketProvider } from './providers/WebSocketProvider.tsx'
+// import { UsersProvider } from './providers/UsersProvider.tsx'
 import { ThemeProvider } from 'next-themes'
 import { BrowserRouter } from 'react-router-dom'
 import { AuthProvider } from './providers/AuthProvider.tsx'
@@ -15,8 +15,8 @@ createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <BrowserRouter>
             <AuthProvider>
-                <WebSocketProvider>
-                    <UsersProvider>
+                {/* <WebSocketProvider> */}
+                    {/* <UsersProvider> */}
                         <PresenceProvider>
                             <ThemeProvider>
                                 <CustomThemeProvider>
@@ -26,8 +26,8 @@ createRoot(document.getElementById('root')!).render(
                                 </CustomThemeProvider>
                             </ThemeProvider>
                         </PresenceProvider>
-                    </UsersProvider>
-                </WebSocketProvider>
+                    {/* </UsersProvider> */}
+                {/* </WebSocketProvider> */}
             </AuthProvider>
         </BrowserRouter>
     </StrictMode>
