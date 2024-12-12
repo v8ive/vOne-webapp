@@ -58,6 +58,7 @@ export const AuthProvider = ({ children }: ProviderParams) => {
         } catch (error) {
             console.error("Error fetching user:", error);
         } finally {
+            console.log("Finished fetching user.");
             setIsLoading(false);
         }
     };
