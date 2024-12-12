@@ -17,34 +17,26 @@ export const AuthProvider = ({ children }: ProviderParams) => {
     console.log("User:", user);
 
     useEffect(() => {
-        const checkStorage = async () => {
-            if (localStorage.getItem('sb-batsqueiouxbwiweakyn-auth-token')) {
-                setIsLoading(true);
-                const { data, error } = await supabase.auth.getSession();
-                if (data && data.session) {
-                    await fetchUser(data.session.user.id, data.session);
-                } else if (error) {
-                    console.error("Error fetching session:", error);
-                    setIsLoading(false);
-                } else {
-                    setIsLoading(false);
-                }
+        // Check for existing session on mount
+        const checkSession = async () => {
+            const { data, error } = await supabase.auth.getSession();
+            if (data?.session) {
+                await fetchUser(data.session.user.id, data.session);
+            } else if (error) {
+                console.error("Error fetching session:", error);
             }
-        }
-        checkStorage();
+            setIsLoading(false); // Set isLoading to false after checking
+        };
+        checkSession();
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             async (event, session) => {
                 if (event === "SIGNED_OUT") {
                     setUser(null);
-                    setIsLoading(false);
                     navigate("/");
                 } else if (session) {
-                    // Fetch user data when a session is available (SIGNED_IN or INITIAL_SESSION)
                     await fetchUser(session.user.id, session);
                 }
-
-                console.log("Auth Event:", event, session);
             }
         );
 
