@@ -48,17 +48,17 @@ export const AuthProvider = ({ children }: ProviderParams) => {
     const fetchUser = async (id: string, session: Session) => {
         console.log("Fetching user...");
         try {
-            const user = await new User(
+            const user = await (new User(
                 id,
                 session.user?.user_metadata?.full_name as string,
                 session.user?.user_metadata?.avatar_url as string
-            ).fetch();
+            )).fetch();
+            console.log("User fetched:", user);
             setUser(user);
         } catch (error) {
             console.error("Error fetching user:", error);
         } finally {
             setIsLoading(false);
-            console.log("User fetched!");
         }
     };
 
