@@ -3,7 +3,6 @@ import { AuthContext } from "../context/AuthContext";
 import { Session } from "@supabase/supabase-js";
 import { useNavigate } from "react-router-dom";
 import { User } from "../classes/User";
-import { createUser } from "../utils/User";
 import { supabase } from "../utils/supabase";
 
 interface ProviderParams {
@@ -45,24 +44,19 @@ export const AuthProvider = ({ children }: ProviderParams) => {
     }, []);
 
     const fetchUser = async (id: string, session: Session) => {
-        let fetchedUser = user;
-        if (!fetchedUser) {
-            fetchedUser = await new User(id).fetch();
-            if (!fetchedUser) {
-                fetchedUser = await createUser(
-                    session?.user.user_metadata?.full_name ||
-                    session?.user.user_metadata?.username,
-                    session?.user.user_metadata?.avatar_url || null
-                );
-            }
-        } else if (session?.user.id !== fetchedUser.id) {
-            fetchedUser = await new User(session?.user.id as string).fetch();
+        const { data, error } = await supabase.from("users").select().eq("id", id).single();
+        if (error) {
+            console.error("Error fetching user:", error);
+            return;
         }
-
-        if (fetchedUser) {
-            setUser(fetchedUser);
+        if (!data) {
+            const user = await new User(
+                id,
+                session.user.user_metadata.full_name as string,
+                session.user.user_metadata.avatar_url as string
+            ).fetch();
+            setUser(user);
         }
-        setIsLoading(false);
     };
 
     const signIn = async () => {
