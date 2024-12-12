@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }: ProviderParams) => {
                     setIsLoading(false);
                 } else if (session) {
                     await fetchUser(session.user.id, session);
+                    setIsLoading(false);
                 }
                 console.log("Auth Event:", event, session);
             }
@@ -44,19 +45,13 @@ export const AuthProvider = ({ children }: ProviderParams) => {
     }, []);
 
     const fetchUser = async (id: string, session: Session) => {
-        const { data, error } = await supabase.from("users").select().eq("id", id).single();
-        if (error) {
-            console.error("Error fetching user:", error);
-            return;
-        }
-        if (!data) {
-            const user = await new User(
-                id,
-                session.user.user_metadata.full_name as string,
-                session.user.user_metadata.avatar_url as string
-            ).fetch();
+        await new User(id,
+            session.user?.user_metadata?.full_name as string,
+            session.user?.user_metadata?.avatar_url as string,
+        ).fetch().then((user) => {
             setUser(user);
-        }
+            return user;
+        });
     };
 
     const signIn = async () => {
