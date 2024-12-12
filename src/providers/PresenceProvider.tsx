@@ -22,7 +22,7 @@ export const PresenceProvider = ({ children }: ProviderParams) => {
     const [connected, setConnected] = useState<boolean>(false);
 
     useEffect(() => {
-        if (!user || isLoading) {
+        if (!user) {
             // Clear presences and set userPresence to a default offline state when user is not logged in
             setPresences([]);
             setConnected(false);
