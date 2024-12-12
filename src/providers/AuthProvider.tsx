@@ -14,6 +14,8 @@ export const AuthProvider = ({ children }: ProviderParams) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const navigate = useNavigate();
 
+    console.log("User:", user);
+
     useEffect(() => {
         const checkStorage = async () => {
             if (localStorage.getItem('sb-batsqueiouxbwiweakyn-auth-token')) {
