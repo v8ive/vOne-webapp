@@ -61,9 +61,8 @@ export const AuthProvider = ({ children }: ProviderParams) => {
 
         if (fetchedUser) {
             setUser(fetchedUser);
-            setIsLoading(false);
         }
-        
+        setIsLoading(false);
     };
 
     const signIn = async () => {
